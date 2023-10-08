@@ -43,14 +43,33 @@ export default function Registration() {
                         className="form-text"
                         style={{ marginBottom: "2px" }}
                       >
-                        <i className="fa fa-user"></i>&nbsp;&nbsp;&nbsp;Full
+                        <i className="fa fa-user"></i>&nbsp;&nbsp;&nbsp;First
                         Name
                       </span>
                       <div className="col-md-10">
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Enter your full name"
+                          placeholder="Enter your first name"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-outline mb-2">
+                      <br />
+                      <span
+                        id="passwordHelpInline"
+                        className="form-text"
+                        style={{ marginBottom: "2px" }}
+                      >
+                        <i className="fa fa-user"></i>&nbsp;&nbsp;&nbsp;Last
+                        Name
+                      </span>
+                      <div className="col-md-10">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Enter your last name"
                           required
                         />
                       </div>

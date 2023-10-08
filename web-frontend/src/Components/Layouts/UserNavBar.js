@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class NavBar extends Component {
+export default class UserNavBar extends Component {
   render() {
     return (
       <div>
@@ -43,7 +43,7 @@ export default class NavBar extends Component {
                       marginRight: 20,
                     }}
                   >
-                    <b>Trains</b>
+                    <b>History</b>
                   </a>
                 </li>
 
@@ -97,11 +97,11 @@ export default class NavBar extends Component {
                     <b>Contact Us</b>
                   </a>
                 </li>
-
                 <li className="nav-item">
                   <a
                     className="nav-link"
-                    href="/signin"
+                    aria-current="page"
+                    href="/"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",
@@ -110,22 +110,7 @@ export default class NavBar extends Component {
                       marginRight: 20,
                     }}
                   >
-                    <b>Sign In</b>
-                  </a>
-                </li>
-
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    href="/signup"
-                    style={{
-                      color: "black",
-                      fontFamily: "times new roman",
-                      fontSize: 20,
-                      marginLeft: 50,
-                    }}
-                  >
-                    <b>Sign Up </b>
+                    <b>Terms & Conditions</b>
                   </a>
                 </li>
               </ul>
