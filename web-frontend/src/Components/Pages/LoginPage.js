@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from "../Layouts/footer";
 import NavBar from "../Layouts/NavBar";
+import Button from "@material-ui/core/Button";
 
 export default function LoginPage() {
   return (
@@ -19,14 +20,10 @@ export default function LoginPage() {
           >
             <div className="card-body">
               <div className="container py-5 h-90">
+                <h2>
+                  <b style={{ marginLeft: "450px" }}>USER LOGIN</b>
+                </h2>
                 <div className="row d-flex align-items-center justify-content-center h-100">
-                  <h2>
-                    <u>
-                      <b style={{ marginLeft: "450px" }}>
-                        USER&nbsp;&nbsp;LOGIN
-                      </b>
-                    </u>
-                  </h2>
                   <div className="col-md-8 col-lg-7 col-xl-6">
                     <img
                       src="https://res.cloudinary.com/nibmsa/image/upload/v1696782091/360_F_596964163_z9Nusp6ntu936haGJwuq3dEmUVkr9pAh-removebg-preview_phocbq.png"
@@ -36,7 +33,7 @@ export default function LoginPage() {
                         height: "350px",
                         width: "550px",
                         marginLeft: "10px",
-                        marginTop: -50,
+                        marginTop: -10,
                       }}
                     />
                     <br />
@@ -78,6 +75,38 @@ export default function LoginPage() {
                             className="form-control "
                             placeholder="Enter Your Password"
                           />
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md">
+                          <Button
+                            type="submit"
+                            style={{
+                              background: "#8BC0FF",
+                              width: "100%",
+                              height: "auto",
+                              color: "BLACK",
+                              borderRadius: 20,
+                              marginTop: "10px",
+                            }}
+                          >
+                            <i className="fa fa-check-circle"></i>&nbsp; SIGN IN
+                          </Button>
+                        </div>
+                        <div className="col-md">
+                          <Button
+                            type="submit"
+                            style={{
+                              background: "#368BC1",
+                              width: "100%",
+                              height: "auto",
+                              color: "BLACK",
+                              borderRadius: 20,
+                              marginTop: "10px",
+                            }}
+                          >
+                            <i className="fa fa-times-circle"></i>&nbsp; CANCEL
+                          </Button>
                         </div>
                       </div>
                       <div className="divider d-flex align-items-center my-4">

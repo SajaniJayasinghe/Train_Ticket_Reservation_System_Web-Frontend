@@ -7,18 +7,6 @@ export default function LandingPage() {
     <div>
       <NavBar />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        {/* <div>
-          <img
-            className="card-img-top"
-            src="https://res.cloudinary.com/nibmsa/image/upload/v1696774407/showcasing-new-transportation-company-social-media-post-spotlighting-dynamic-lines_916191-74361_yycdpf.avif"
-            style={{
-              marginTop: 10,
-              width: "100%",
-              height: "450px",
-            }}
-            alt="Description of the image"
-          />
-        </div> */}
         <div>
           <img
             className="card-img-top"

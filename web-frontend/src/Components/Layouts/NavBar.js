@@ -117,7 +117,7 @@ export default class UserNavBar extends Component {
                 <li className="nav-item">
                   <a
                     className="nav-link"
-                    href="/"
+                    href="/signup"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",
