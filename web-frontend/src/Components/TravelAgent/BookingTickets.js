@@ -106,8 +106,8 @@ export default function BookingTickets() {
                     max="5"
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="selectedTrain">3. Select Train</label>
+                <div className="form-group col-md-6">
+                  <label htmlFor="selectedTrain">3.From</label>
                   <select
                     id="selectedTrain"
                     className="form-control"
@@ -115,7 +115,24 @@ export default function BookingTickets() {
                     // value={selectedTrain}
                     // onChange={(e) => setSelectedTrain(e.target.value)}
                   >
-                    <option value="">Select a Train</option>
+                    <option value="">Select Station</option>
+                    {/* {trainNames.map((trainName, index) => (
+                    <option key={index} value={trainName}>
+                      {trainName} */}
+                    {/* </option> */}
+                    {/* ))} */}
+                  </select>
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="selectedTrain">4. To</label>
+                  <select
+                    id="selectedTrain"
+                    className="form-control"
+                    style={{ marginTop: 6 }}
+                    // value={selectedTrain}
+                    // onChange={(e) => setSelectedTrain(e.target.value)}
+                  >
+                    <option value="">Select Station</option>
                     {/* {trainNames.map((trainName, index) => (
                     <option key={index} value={trainName}>
                       {trainName} */}
@@ -124,7 +141,7 @@ export default function BookingTickets() {
                   </select>
                 </div>
                 <div class="form-group col-md-6" style={{ marginTop: 14 }}>
-                  4. Booking Date
+                  5. Booking Date
                   <input
                     type="date"
                     id="bookingDate"
@@ -135,9 +152,9 @@ export default function BookingTickets() {
                 </div>
 
                 <div class="form-group col-md-6" style={{ marginTop: 14 }}>
-                  5. Reservation Date
+                  6. Reservation Date
                   <input
-                    type="text"
+                    type="date"
                     class="form-control"
                     placeholder="Reservation date"
                   />
@@ -157,8 +174,8 @@ export default function BookingTickets() {
                         marginTop: "40px",
                       }}
                     >
-                      <i className="fa fa-check-circle"></i>&nbsp;{" "}
-                      <b>RESERVE</b>
+                      <i className="fa fa-check-circle"></i>&nbsp;
+                      <b>SEARCH</b>
                     </Button>
                   </div>
                   <div className="col-md-6">

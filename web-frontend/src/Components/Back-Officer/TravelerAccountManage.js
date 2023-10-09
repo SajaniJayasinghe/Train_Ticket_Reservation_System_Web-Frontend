@@ -1,8 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import UserNavBar from "../Layouts/UserNavBar";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
 
 export default function TravelerAccountManage() {
+  const [travelers, setTravelers] = useState([]);
+  const [searchKey, setSearchKey] = useState("");
+
+  useEffect(() => {
+    retrieveTravelers();
+  }, []);
+
+  const retrieveTravelers = () => {
+    axios.get("https://localhost:7280/api/Traveler").then((res) => {
+      if (res.status === 200) {
+        setTravelers(res.data);
+      }
+    });
+  };
+
+  const handleSearchArea = (e) => {
+    const newSearchKey = e.target.value;
+    setSearchKey(newSearchKey);
+
+    // Filter travelers based on the search key (NIC)
+    const filteredTravelers = travelers.filter((traveler) =>
+      traveler.nic.includes(newSearchKey)
+    );
+
+    setTravelers(filteredTravelers);
+  };
+
+  const handleActivate = (nic) => {
+    axios
+      .post(`https://localhost:7280/api/Traveler/activate/${nic}`)
+      .then((res) => {
+        if (res.status === 200) {
+          retrieveTravelers(); // Refresh the traveler list after activation
+        }
+      });
+  };
+
+  const handleDeactivate = (nic) => {
+    axios
+      .post(`https://localhost:7280/api/Traveler/deactivate/${nic}`)
+      .then((res) => {
+        if (res.status === 200) {
+          retrieveTravelers(); // Refresh the traveler list after deactivation
+        }
+      });
+  };
+
   return (
     <div>
       <UserNavBar />
@@ -29,7 +77,7 @@ export default function TravelerAccountManage() {
                 type="text"
                 className="form-control"
                 placeholder="Search Traveler NIC"
-                // onChange={this.handleSearchArea}
+                onChange={handleSearchArea}
               />
               <br />
             </div>
@@ -60,44 +108,52 @@ export default function TravelerAccountManage() {
                 </tr>
               </thead>
               <tbody>
-                {/* {filteredCourses.map((course, index) => ( */}
-                {/* <tr key={course._id}> */}
-                <tr>
-                  {/* <th scope="row">{index + 1}</th> */}
-                  <td>1</td>
-                  <td>sajani</td>
-                  <td>abc</td>
-                  <td>1234</td>
-                  <td>1234</td>
-                  <td>Active</td>
-                  <td>
-                    <Button
+                {travelers.map((traveler, index) => (
+                  <tr key={traveler.nic}>
+                    <td>{index + 1}</td>
+                    <td>{traveler.fullName}</td>
+                    <td>{traveler.email}</td>
+                    <td>{traveler.nic}</td>
+                    <td>{traveler.phone}</td>
+                    <td
                       style={{
-                        background: "#004225",
-                        flex: "1",
-                        color: "#ffff",
-                        marginRight: "10px",
-                        borderRadius: 5,
+                        fontWeight: "bold",
+                        color: traveler.isActive ? "#004225" : "red",
                       }}
-                      //   onClick={() => handleActivateUser(user.id)}
                     >
-                      Activate
-                    </Button>
-                    <Button
-                      style={{
-                        background: "#B21807",
-                        flex: "1",
-                        color: "#ffff",
-                        marginRight: "10px",
-                        borderRadius: 5,
-                      }}
-                      //   onClick={() => handleActivateUser(user.id)}
-                    >
-                      Deactivate
-                    </Button>
-                  </td>
-                </tr>
-                {/* ))} */}
+                      {traveler.isActive ? "Active" : "Deactivated"}
+                    </td>
+                    <td>
+                      {traveler.isActive ? (
+                        <Button
+                          style={{
+                            background: "#B21807",
+                            flex: "1",
+                            color: "#ffff",
+                            marginRight: "10px",
+                            borderRadius: 5,
+                          }}
+                          onClick={() => handleDeactivate(traveler.nic)}
+                        >
+                          Deactivate
+                        </Button>
+                      ) : (
+                        <Button
+                          style={{
+                            background: "#004225",
+                            flex: "1",
+                            color: "#ffff",
+                            marginRight: "10px",
+                            borderRadius: 5,
+                          }}
+                          onClick={() => handleActivate(traveler.nic)}
+                        >
+                          Activate
+                        </Button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
