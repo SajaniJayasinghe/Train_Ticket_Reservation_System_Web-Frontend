@@ -116,7 +116,7 @@ export default class TravelAgentNavbar extends Component {
                   <a
                     className="nav-link"
                     aria-current="page"
-                    href="/contactus"
+                    href="/termsconditions"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",

@@ -1,9 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import Footer from "../Layouts/footer";
 import NavBar from "../Layouts/NavBar";
 import Button from "@material-ui/core/Button";
 
 export default function Registration() {
+  const [FullName, setFullName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [NIC, setNIC] = useState("");
+  const [PasswordHash, setPasswordHash] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [PhoneNumber, setPhoneNumber] = useState("");
+
+  const sendData = async (e) => {
+    e.preventDefault();
+
+    let travelAgents = {
+      FullName: FullName,
+      Email: Email,
+      PasswordHash: PasswordHash,
+      NIC: NIC,
+      PhoneNumber: PhoneNumber,
+      ConfirmPassword: ConfirmPassword,
+      role: "Travel Agent",
+    };
+    if (PasswordHash == ConfirmPassword) {
+      axios
+        .post("https://localhost:7280/api/TravelAgents", travelAgents)
+        .then(() => {
+          alert("Registration Success");
+          window.location.href = "/signin";
+        })
+        .catch((err) => {
+          alert(err);
+        });
+      console.log(travelAgents);
+    } else {
+      alert("Password dismatch");
+    }
+    setFullName("");
+    setEmail("");
+    setConfirmPassword("");
+    setPasswordHash("");
+    setNIC("");
+    setPhoneNumber("");
+  };
+
   return (
     <div>
       <NavBar />
@@ -19,7 +61,7 @@ export default function Registration() {
             }}
           >
             <div className="card-body">
-              <form action="" method="post" name="form">
+              <form action="" method="post" name="form" onSubmit={sendData}>
                 <div className="row g-0">
                   <div className="col-xl-7 d-none d-xl-block">
                     <br />
@@ -36,36 +78,22 @@ export default function Registration() {
                   </div>
 
                   <div className="col-xl-5">
-                    <div className="form-outline mb-2">
-                      <br />
-                      <span id="passwordHelpInline" className="form-text">
-                        <i className="fa fa-user"></i>&nbsp;&nbsp;&nbsp;First
-                        Name
-                      </span>
-                      <div className="col-md-10">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Enter your first name"
-                          required
-                        />
-                      </div>
-                    </div>
                     <div
                       className="form-outline mb-2"
-                      style={{ marginTop: -20 }}
+                      style={{ marginTop: 30 }}
                     >
                       <br />
                       <span id="passwordHelpInline" className="form-text">
-                        <i className="fa fa-user"></i>&nbsp;&nbsp;&nbsp;Last
+                        <i className="fa fa-user"></i>&nbsp;&nbsp;&nbsp;Full
                         Name
                       </span>
                       <div className="col-md-10">
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Enter your last name"
+                          placeholder="Enter your Full name"
                           required
+                          onChange={(e) => setFullName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -85,6 +113,7 @@ export default function Registration() {
                           className="form-control"
                           placeholder="Enter your E-mail address"
                           required
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                     </div>
@@ -103,6 +132,7 @@ export default function Registration() {
                           className="form-control"
                           placeholder="Enter your NIC number"
                           required
+                          onChange={(e) => setNIC(e.target.value)}
                         />
                       </div>
                     </div>
@@ -122,6 +152,7 @@ export default function Registration() {
                           pattern="[0-9]{10}"
                           placeholder="Enter your phone number"
                           required
+                          onChange={(e) => setPhoneNumber(e.target.value)}
                         />
                       </div>
                     </div>
@@ -142,6 +173,7 @@ export default function Registration() {
                           data-toggle="tooltip"
                           data-placement="center"
                           required
+                          onChange={(e) => setPasswordHash(e.target.value)}
                         />
                       </div>
                     </div>
@@ -159,7 +191,7 @@ export default function Registration() {
                           type="password"
                           className="form-control"
                           placeholder="Enter your confirm password"
-                          required
+                          onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                       </div>
                     </div>
