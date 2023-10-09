@@ -1,11 +1,11 @@
 import React from "react";
-import UserNavBar from "../Layouts/UserNavBar";
+import TravelAgentNavbar from "../Layouts/TravelAgentNavbar";
 import Button from "@material-ui/core/Button";
 
 export default function HomePage() {
   return (
     <div>
-      <UserNavBar />
+      <TravelAgentNavbar />
       <div
         className="buttons"
         style={{
@@ -24,40 +24,11 @@ export default function HomePage() {
             marginRight: "10px",
             borderRadius: 5,
           }}
-          href="/addTrainSchedule"
+          href="/bookingTickets"
           disableElevation
           type="submit"
         >
-          <b>Add Train Schedule</b>
-        </Button>
-        <Button
-          variant="contained"
-          style={{
-            background: "#FF8C00",
-            flex: "1",
-            color: "#000000",
-            borderRadius: 5,
-          }}
-          href="/travelerAccountManage"
-          disableElevation
-          type="submit"
-        >
-          <b>Traveler Account Manage</b>
-        </Button>
-        <Button
-          variant="contained"
-          style={{
-            background: "#004225",
-            flex: "1",
-            color: "#ffff",
-            borderRadius: 5,
-            marginLeft: "10px",
-          }}
-          href="/backofficerreservation"
-          disableElevation
-          type="submit"
-        >
-          <b>Reservation</b>
+          <b>Booking Tickets</b>
         </Button>
       </div>
       <div>
@@ -79,7 +50,7 @@ export default function HomePage() {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search Train Name"
+                placeholder="Search Train Number"
                 // onChange={this.handleSearchArea}
               />
               <br />
@@ -117,38 +88,11 @@ export default function HomePage() {
                   {/* <th scope="row">{index + 1}</th> */}
                   <td>1</td>
                   <td>sajani</td>
-                  <td>T123</td>
-                  <td>Galle</td>
+                  <td>abc</td>
+                  <td>1234</td>
                   <td>52</td>
                   <td>Rs.100.00</td>
-                  <td>
-                    <Button
-                      style={{
-                        background: "#004225",
-                        flex: "1",
-                        color: "#ffff",
-                        marginRight: "10px",
-                        borderRadius: 5,
-                      }}
-                      href="/updateTrainSchedule"
-                      //   onClick={() => handleActivateUser(user.id)}
-                    >
-                      Edit
-                    </Button>
-
-                    <Button
-                      style={{
-                        background: "#B21807",
-                        flex: "1",
-                        color: "#ffff",
-                        marginRight: "10px",
-                        borderRadius: 5,
-                      }}
-                      //   onClick={() => handleActivateUser(user.id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
+                  <td>Active</td>
                 </tr>
                 {/* ))} */}
               </tbody>

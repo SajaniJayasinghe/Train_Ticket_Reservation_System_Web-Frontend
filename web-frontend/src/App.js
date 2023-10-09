@@ -7,6 +7,9 @@ import BackOfficerHome from "./Components/Back-Officer/HomePage";
 import AddTrainSchedule from "./Components/Back-Officer/AddTrainSchedule";
 import UpdateTrainSchedule from "./Components/Back-Officer/UpdateTrainSchedule";
 import TravelerAccountManage from "./Components/Back-Officer/TravelerAccountManage";
+import TravelAgentHome from "./Components/TravelAgent/HomePage";
+import BackofficerReservation from "./Components/Back-Officer/Reservation";
+import BookingTickets from "./Components/TravelAgent/BookingTickets";
 
 function App() {
   return (
@@ -18,10 +21,16 @@ function App() {
         <Route path="/backofficerhome" element={<BackOfficerHome />} />
         <Route path="/addTrainSchedule" element={<AddTrainSchedule />} />
         <Route path="/updateTrainSchedule" element={<UpdateTrainSchedule />} />
+        <Route path="/travelAgentHome" element={<TravelAgentHome />} />
         <Route
           path="/travelerAccountManage"
           element={<TravelerAccountManage />}
         />
+        <Route
+          path="/backofficerreservation"
+          element={<BackofficerReservation />}
+        />
+        <Route path="/bookingTickets" element={<BookingTickets />} />
       </Routes>
     </BrowserRouter>
   );

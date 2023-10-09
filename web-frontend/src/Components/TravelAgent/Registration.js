@@ -13,7 +13,7 @@ export default function Registration() {
             style={{
               width: 1000,
               background: "#DCEAFB",
-              height: 600,
+              height: 650,
               marginTop: 60,
               borderRadius: "20px",
             }}
@@ -38,11 +38,7 @@ export default function Registration() {
                   <div className="col-xl-5">
                     <div className="form-outline mb-2">
                       <br />
-                      <span
-                        id="passwordHelpInline"
-                        className="form-text"
-                        style={{ marginBottom: "2px" }}
-                      >
+                      <span id="passwordHelpInline" className="form-text">
                         <i className="fa fa-user"></i>&nbsp;&nbsp;&nbsp;First
                         Name
                       </span>
@@ -55,13 +51,12 @@ export default function Registration() {
                         />
                       </div>
                     </div>
-                    <div className="form-outline mb-2">
+                    <div
+                      className="form-outline mb-2"
+                      style={{ marginTop: -20 }}
+                    >
                       <br />
-                      <span
-                        id="passwordHelpInline"
-                        className="form-text"
-                        style={{ marginBottom: "2px" }}
-                      >
+                      <span id="passwordHelpInline" className="form-text">
                         <i className="fa fa-user"></i>&nbsp;&nbsp;&nbsp;Last
                         Name
                       </span>
@@ -178,7 +173,7 @@ export default function Registration() {
                             height: "auto",
                             color: "BLACK",
                             borderRadius: 20,
-                            marginTop: "10px",
+                            marginTop: "20px",
                           }}
                         >
                           <i className="fa fa-check-circle"></i>&nbsp; SIGN UP
@@ -194,7 +189,7 @@ export default function Registration() {
                             height: "auto",
                             color: "BLACK",
                             borderRadius: 20,
-                            marginTop: "10px",
+                            marginTop: "20px",
                           }}
                         >
                           <i className="fa fa-times-circle"></i>&nbsp; CANCEL

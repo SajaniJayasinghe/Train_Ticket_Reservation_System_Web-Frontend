@@ -18,10 +18,13 @@ export default function TravelerAccountManage() {
                 marginTop: 30,
               }}
             >
-              <b>TRAVELER ACCOUNT MANAGEMENT</b>
+              <b>TRAVELERS ACCOUNT MANAGEMENT</b>
             </h3>
             <br />
-            <div className="col-md-3" style={{ marginRight: "1300px" }}>
+            <div
+              className="col-md-3"
+              style={{ marginRight: "1300px", marginTop: "40px" }}
+            >
               <input
                 type="text"
                 className="form-control"
@@ -49,10 +52,10 @@ export default function TravelerAccountManage() {
                     <font color="#fff">Phone Number</font>
                   </th>
                   <th>
-                    <font color="#fff">Account Activate</font>
+                    <font color="#fff">Account Status</font>
                   </th>
                   <th>
-                    <font color="#fff">Account Deactivate</font>
+                    <font color="#fff">Account Action</font>
                   </th>
                 </tr>
               </thead>
@@ -66,6 +69,7 @@ export default function TravelerAccountManage() {
                   <td>abc</td>
                   <td>1234</td>
                   <td>1234</td>
+                  <td>Active</td>
                   <td>
                     <Button
                       style={{
@@ -79,8 +83,6 @@ export default function TravelerAccountManage() {
                     >
                       Activate
                     </Button>
-                  </td>
-                  <td>
                     <Button
                       style={{
                         background: "#B21807",
