@@ -3,7 +3,7 @@ import UserNavBar from "../Layouts/UserNavBar";
 import Footer from "../Layouts/footer";
 import Button from "@material-ui/core/Button";
 
-export default function AddTrainSchedule() {
+export default function UpdateTrainSchedule() {
   const trainStations = ["Station A", "Station B", "Station C", "Station D"];
 
   return (
@@ -24,20 +24,20 @@ export default function AddTrainSchedule() {
           <div class="card-body">
             <form>
               <div className="col-md-6" style={{ marginTop: 60 }}>
-                <h2>Add Train Schedule</h2>
+                <h2>Update Train Schedule</h2>
               </div>
               <div
                 style={{
                   position: "absolute",
                   top: "29%",
-                  left: "64%",
+                  left: "65%",
                   transform: "translate(-50%, -50%)",
                 }}
               >
                 <img
                   src="https://res.cloudinary.com/nibmsa/image/upload/v1696825236/showcasing-new-transportation-company-social-media-post-spotlighting-dynamic-lines_916191-74389_nsojs0-removebg-preview_otwavo.png"
                   alt="Train Schedule Icon"
-                  style={{ width: "70%", height: "auto" }}
+                  style={{ width: "65%", height: "auto" }}
                 />
               </div>
               <div class="row">
@@ -91,7 +91,7 @@ export default function AddTrainSchedule() {
                       style={{
                         background: "#3090C7",
                         width: "40%",
-                        marginLeft: "400px",
+                        marginLeft: "380px",
                         height: "auto",
                         color: "BLACK",
                         borderRadius: 5,
@@ -100,7 +100,7 @@ export default function AddTrainSchedule() {
                       }}
                     >
                       <i className="fa fa-check-circle"></i>&nbsp;{" "}
-                      <b>Add Train</b>
+                      <b>Update Train</b>
                     </Button>
                   </div>
                   <div className="col-md">
