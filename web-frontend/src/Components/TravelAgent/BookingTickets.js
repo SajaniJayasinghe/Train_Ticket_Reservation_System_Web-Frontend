@@ -49,9 +49,11 @@ export default function BookingTickets() {
   return (
     <div>
       <TravelAgentNavbar />
+      <br />
+      <br />
       <div
         class="row d-flex align-items-center justify-content-center"
-        style={{ marginTop: 100 }}
+        style={{ marginTop: 70 }}
       >
         <div
           style={{
@@ -69,7 +71,7 @@ export default function BookingTickets() {
               <div
                 style={{
                   position: "absolute",
-                  top: "25%",
+                  top: "28%",
                   left: "69%",
                   transform: "translate(-50%, -50%)",
                 }}

@@ -50,7 +50,7 @@ export default class TravelAgentNavbar extends Component {
                   <a
                     className="nav-link"
                     aria-current="page"
-                    href="/"
+                    href="/history"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",
@@ -67,7 +67,7 @@ export default class TravelAgentNavbar extends Component {
                   <a
                     className="nav-link"
                     aria-current="page"
-                    href="/"
+                    // href="#"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",
@@ -84,7 +84,6 @@ export default class TravelAgentNavbar extends Component {
                   <a
                     className="nav-link"
                     aria-current="page"
-                    href="/"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",
@@ -101,7 +100,7 @@ export default class TravelAgentNavbar extends Component {
                   <a
                     className="nav-link"
                     aria-current="page"
-                    href="/"
+                    href="/contactus"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",
@@ -117,7 +116,7 @@ export default class TravelAgentNavbar extends Component {
                   <a
                     className="nav-link"
                     aria-current="page"
-                    href="/"
+                    href="/contactus"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",

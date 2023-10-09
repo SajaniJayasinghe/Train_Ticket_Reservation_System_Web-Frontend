@@ -85,7 +85,7 @@ export default class NavBar extends Component {
                   <a
                     className="nav-link"
                     aria-current="page"
-                    href="/"
+                    href="/contactus"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",

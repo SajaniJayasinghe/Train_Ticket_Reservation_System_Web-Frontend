@@ -10,6 +10,9 @@ import TravelerAccountManage from "./Components/Back-Officer/TravelerAccountMana
 import TravelAgentHome from "./Components/TravelAgent/HomePage";
 import BackofficerReservation from "./Components/Back-Officer/Reservation";
 import BookingTickets from "./Components/TravelAgent/BookingTickets";
+import History from "./Components/Pages/History";
+import Contactus from "./Components/Pages/Contactus";
+import TermsConditions from "./Components/Pages/TermsConditions";
 
 function App() {
   return (
@@ -31,6 +34,9 @@ function App() {
           element={<BackofficerReservation />}
         />
         <Route path="/bookingTickets" element={<BookingTickets />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/contactus" element={<Contactus />} />
+        <Route path="/termsconditions" element={<TermsConditions />} />
       </Routes>
     </BrowserRouter>
   );
