@@ -2,49 +2,10 @@ import React from "react";
 import UserNavBar from "../Layouts/UserNavBar";
 import Button from "@material-ui/core/Button";
 
-export default function HomePage() {
+export default function TravelerAccountManage() {
   return (
     <div>
       <UserNavBar />
-      <div
-        className="buttons"
-        style={{
-          position: "absolute",
-          marginTop: "50px",
-          right: 0,
-          margin: "20px",
-        }}
-      >
-        <Button
-          variant="contained"
-          style={{
-            background: "#B21807",
-            flex: "1",
-            color: "#ffff",
-            marginRight: "10px",
-            borderRadius: 5,
-          }}
-          href="/addTrainSchedule"
-          disableElevation
-          type="submit"
-        >
-          <b>Add Train Schedule</b>
-        </Button>
-        <Button
-          variant="contained"
-          style={{
-            background: "#FF8C00",
-            flex: "1",
-            color: "#000000",
-            borderRadius: 5,
-          }}
-          href="/travelerAccountManage"
-          disableElevation
-          type="submit"
-        >
-          <b>Traveler Account Manage</b>
-        </Button>
-      </div>
       <div>
         <div style={{ width: "90%", marginLeft: 90 }}>
           <br />
@@ -54,17 +15,17 @@ export default function HomePage() {
               style={{
                 fontFamily: "times new roman",
                 fontSize: "40px",
-                marginTop: 80,
+                marginTop: 30,
               }}
             >
-              <b>TRAIN SCHEDULE MANAGEMENT</b>
+              <b>TRAVELER ACCOUNT MANAGEMENT</b>
             </h3>
             <br />
             <div className="col-md-3" style={{ marginRight: "1300px" }}>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search Train Name"
+                placeholder="Search Traveler NIC"
                 // onChange={this.handleSearchArea}
               />
               <br />
@@ -76,22 +37,22 @@ export default function HomePage() {
                     <font color="#fff">No</font>
                   </th>
                   <th>
-                    <font color="#fff">Train Name</font>
+                    <font color="#fff">Full Name</font>
                   </th>
                   <th>
-                    <font color="#fff">Train Number</font>
+                    <font color="#fff">Email Address</font>
                   </th>
                   <th>
-                    <font color="#fff">Stations</font>
+                    <font color="#fff">NIC</font>
                   </th>
                   <th>
-                    <font color="#fff">Seats</font>
+                    <font color="#fff">Phone Number</font>
                   </th>
                   <th>
-                    <font color="#fff">Unit Price</font>
+                    <font color="#fff">Account Activate</font>
                   </th>
                   <th>
-                    <font color="#fff">Action</font>
+                    <font color="#fff">Account Deactivate</font>
                   </th>
                 </tr>
               </thead>
@@ -104,8 +65,7 @@ export default function HomePage() {
                   <td>sajani</td>
                   <td>abc</td>
                   <td>1234</td>
-                  <td>52</td>
-                  <td>Rs.100.00</td>
+                  <td>1234</td>
                   <td>
                     <Button
                       style={{
@@ -117,9 +77,10 @@ export default function HomePage() {
                       }}
                       //   onClick={() => handleActivateUser(user.id)}
                     >
-                      Edit
+                      Activate
                     </Button>
-
+                  </td>
+                  <td>
                     <Button
                       style={{
                         background: "#B21807",
@@ -130,7 +91,7 @@ export default function HomePage() {
                       }}
                       //   onClick={() => handleActivateUser(user.id)}
                     >
-                      Delete
+                      Deactivate
                     </Button>
                   </td>
                 </tr>

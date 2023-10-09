@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 
 export default function UpdateTrainSchedule() {
   const trainStations = ["Station A", "Station B", "Station C", "Station D"];
+  const trainStatus = ["Available", "Unavailable"];
 
   return (
     <div>
@@ -37,7 +38,7 @@ export default function UpdateTrainSchedule() {
                 <img
                   src="https://res.cloudinary.com/nibmsa/image/upload/v1696825236/showcasing-new-transportation-company-social-media-post-spotlighting-dynamic-lines_916191-74389_nsojs0-removebg-preview_otwavo.png"
                   alt="Train Schedule Icon"
-                  style={{ width: "65%", height: "auto" }}
+                  style={{ width: "70%", height: "auto" }}
                 />
               </div>
               <div class="row">
@@ -73,13 +74,24 @@ export default function UpdateTrainSchedule() {
                     placeholder="Train stations"
                   />
                 </div>
-                <div className="form-group" style={{ marginTop: 14 }}>
+                <div class="form-group col-md-6" style={{ marginTop: 14 }}>
                   <label>5. Select Station:</label>
                   <select name="selectedStation" className="form-control">
                     <option value="">Select a station</option>
                     {trainStations.map((station, index) => (
                       <option key={index} value={station}>
                         {station}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div class="form-group col-md-6" style={{ marginTop: 14 }}>
+                  <label>5. Select Status:</label>
+                  <select name="selectedStatus" className="form-control">
+                    <option value="">Select a status</option>
+                    {trainStatus.map((status, index) => (
+                      <option key={index} value={status}>
+                        {status}
                       </option>
                     ))}
                   </select>

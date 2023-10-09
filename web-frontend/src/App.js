@@ -6,6 +6,7 @@ import Registration from "./Components/TravelAgent/Registration";
 import BackOfficerHome from "./Components/Back-Officer/HomePage";
 import AddTrainSchedule from "./Components/Back-Officer/AddTrainSchedule";
 import UpdateTrainSchedule from "./Components/Back-Officer/UpdateTrainSchedule";
+import TravelerAccountManage from "./Components/Back-Officer/TravelerAccountManage";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
         <Route path="/backofficerhome" element={<BackOfficerHome />} />
         <Route path="/addTrainSchedule" element={<AddTrainSchedule />} />
         <Route path="/updateTrainSchedule" element={<UpdateTrainSchedule />} />
+        <Route
+          path="/travelerAccountManage"
+          element={<TravelerAccountManage />}
+        />
       </Routes>
     </BrowserRouter>
   );
