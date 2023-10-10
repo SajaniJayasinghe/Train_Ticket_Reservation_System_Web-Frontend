@@ -6,8 +6,6 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 
 export default function UpdateTrainSchedule() {
-  const trainStations = ["Station A", "Station B", "Station C", "Station D"];
-
   const [trainName, setTrainName] = useState("");
   const [trainNumber, setTrainNumber] = useState("");
   const [stations, setStations] = useState("");
@@ -34,6 +32,41 @@ export default function UpdateTrainSchedule() {
     });
   }, []);
 
+  const handleStatusChange = (e) => {
+    setIsActive(e.target.value);
+  };
+
+  const handleUpdateTrain = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+
+    // Prepare the updated train schedule data
+    const updatedTrainSchedule = {
+      trainName,
+      trainNumber,
+      stations,
+      trainSeats,
+      unitPrice,
+      trainStartTime,
+      isActive,
+    };
+
+    // Make a PUT request to update the train schedule
+    axios
+      .put(`https://localhost:7280/api/Trains/${trainID}`, updatedTrainSchedule)
+      .then((res) => {
+        if (res.status === 204) {
+          alert("Train schedule updated successfully");
+          window.location.href = "/backofficerhome";
+          // Redirect to another page or perform any other action after successful update
+        } else {
+          alert("Train schedule update failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating train schedule:", error);
+      });
+  };
+
   return (
     <div>
       <UserNavBar />
@@ -50,7 +83,7 @@ export default function UpdateTrainSchedule() {
           }}
         >
           <div className="card-body">
-            <form>
+            <form onSubmit={handleUpdateTrain}>
               <div className="col-md-6" style={{ marginTop: 60 }}>
                 <h2>Update Train Schedule</h2>
               </div>
@@ -76,7 +109,7 @@ export default function UpdateTrainSchedule() {
                     className="form-control"
                     placeholder="Train name"
                     value={trainName}
-                    // onChange={(e) => setTrainName(e.target.value)}
+                    onChange={(e) => setTrainName(e.target.value)}
                     required
                   />
                 </div>
@@ -87,7 +120,7 @@ export default function UpdateTrainSchedule() {
                     className="form-control"
                     placeholder="Train number"
                     value={trainNumber}
-                    // onChange={(e) => setTrainNumber(e.target.value)}
+                    onChange={(e) => setTrainNumber(e.target.value)}
                     required
                   />
                 </div>
@@ -98,15 +131,14 @@ export default function UpdateTrainSchedule() {
                     className="form-control"
                     placeholder="Number of Seats"
                     value={trainSeats}
-                    // onChange={(e) => {
-                    //   const newValue = Math.min(
-                    //     Math.max(parseInt(e.target.value), 1),
-                    //     5
-                    //   );
-                    //   setTrainSeats(newValue);
-                    // }}
+                    onChange={(e) => {
+                      const newValue = Math.min(
+                        Math.max(parseInt(e.target.value), 1)
+                      );
+                      setTrainSeats(newValue);
+                    }}
                     required
-                    min="1" // Minimum value
+                    min="1"
                   />
                 </div>
 
@@ -117,7 +149,7 @@ export default function UpdateTrainSchedule() {
                     className="form-control"
                     placeholder="Unit price"
                     value={unitPrice}
-                    // onChange={(e) => setUnitPrice(e.target.value)}
+                    onChange={(e) => setUnitPrice(e.target.value)}
                     required
                   />
                 </div>
@@ -126,7 +158,7 @@ export default function UpdateTrainSchedule() {
                   <select
                     className="form-control"
                     value={stations}
-                    // onChange={(e) => setStations(e.target.value)}
+                    onChange={(e) => setStations(e.target.value)}
                   >
                     <option value="Select">Select</option>
                     <option value="">A</option>
@@ -138,9 +170,10 @@ export default function UpdateTrainSchedule() {
                   <select
                     className="form-control"
                     value={isActive}
-                    // onChange={(e) => setIsActive(e.target.value === "true")}
+                    onChange={handleStatusChange}
                   >
-                    <option value="true">Available</option>
+                    <option value="Available">Available</option>
+                    <option value="Unavailable">Unavailable</option>
                   </select>
                 </div>
 
@@ -150,7 +183,8 @@ export default function UpdateTrainSchedule() {
                     type="text"
                     className="form-control"
                     value={trainStartTime}
-                    // placeholder="Train Time"
+                    placeholder="Train Time"
+                    onChange={(e) => setTrainStartTime(e.target.value)}
                     required
                   />
                 </div>

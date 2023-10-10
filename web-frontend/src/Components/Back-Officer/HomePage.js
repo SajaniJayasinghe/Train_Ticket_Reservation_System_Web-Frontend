@@ -18,6 +18,7 @@ export default function TravelerAccountManage() {
         setTrainSchedule(res.data);
         setFilteredTrainSchedule(res.data); // Initialize filtered data with all data
       }
+      console.log(res.data);
     });
   };
 
@@ -33,21 +34,27 @@ export default function TravelerAccountManage() {
     setFilteredTrainSchedule(filteredTrains);
   };
 
-  const handleDelete = (trainId) => {
+  const handleDelete = async (trainId) => {
     if (window.confirm("Are you sure you want to delete this train?")) {
-      axios
-        .delete(`https://localhost:7280/api/Trains/${trainId}`)
-        .then((res) => {
-          if (res.status === 200) {
-            // Refresh the train schedule data after deletion
-            retrieveTrainSchedule();
-          } else {
-            // Handle error
-          }
-        })
-        .catch((error) => {
-          // Handle error
-        });
+      try {
+        const response = await axios.delete(
+          `https://localhost:7280/api/Trains/${trainId}`
+        );
+        if (response.status === 200) {
+          // Refresh the train schedule data after deletion
+          retrieveTrainSchedule();
+        } else {
+          // Handle error (e.g., display an error message)
+          window.alert("Failed to delete the train. Please try again.");
+        }
+      } catch (error) {
+        // Handle network error or any other unexpected errors
+        console.error("Error deleting train:", error);
+        // Display an error message
+        window.alert(
+          "An error occurred while deleting the train. Please try again later."
+        );
+      }
     }
   };
 
@@ -161,7 +168,10 @@ export default function TravelerAccountManage() {
                     <font color="#fff">Train Status</font>
                   </th>
                   <th>
-                    <font color="#fff">Action</font>
+                    <font color="#fff">Edit Train</font>
+                  </th>
+                  <th>
+                    <font color="#fff">Delete Train</font>
                   </th>
                 </tr>
               </thead>
@@ -173,7 +183,10 @@ export default function TravelerAccountManage() {
                     <td>{train.trainNumber}</td>
                     <td>
                       {train.stations
-                        .map((station) => station.stationName)
+                        .map(
+                          (station) =>
+                            `${station.stationName} - ${station.time}`
+                        )
                         .join(", ")}
                     </td>
                     <td>{train.trainSeats}</td>
@@ -199,6 +212,8 @@ export default function TravelerAccountManage() {
                       >
                         Edit
                       </Button>
+                    </td>
+                    <td>
                       <Button
                         style={{
                           background: "#B21807",
