@@ -11,9 +11,28 @@ export default function Registration() {
   const [PasswordHash, setPasswordHash] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [PhoneNumber, setPhoneNumber] = useState("");
+  const [error, setError] = useState(""); // State for error messages
+
+  const resetForm = () => {
+    setFullName("");
+    setEmail("");
+    setConfirmPassword("");
+    setPasswordHash("");
+    setNIC("");
+    setPhoneNumber("");
+    setError(""); // Clear any previous error messages
+  };
 
   const sendData = async (e) => {
     e.preventDefault();
+
+    // Reset previous error messages
+    setError("");
+
+    if (PasswordHash !== ConfirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
     let travelAgents = {
       FullName: FullName,
@@ -24,26 +43,18 @@ export default function Registration() {
       ConfirmPassword: ConfirmPassword,
       role: "Travel Agent",
     };
-    if (PasswordHash == ConfirmPassword) {
-      axios
-        .post("https://localhost:7280/api/TravelAgents", travelAgents)
-        .then(() => {
-          alert("Registration Success");
-          window.location.href = "/signin";
-        })
-        .catch((err) => {
-          alert(err);
-        });
-      console.log(travelAgents);
-    } else {
-      alert("Password dismatch");
-    }
-    setFullName("");
-    setEmail("");
-    setConfirmPassword("");
-    setPasswordHash("");
-    setNIC("");
-    setPhoneNumber("");
+
+    axios
+      .post("https://localhost:7280/api/TravelAgents", travelAgents)
+      .then(() => {
+        alert("Registration Success");
+        window.location.href = "/signin";
+      })
+      .catch((err) => {
+        setError("Registration failed. Please try again.");
+      });
+
+    resetForm();
   };
 
   return (
@@ -67,7 +78,7 @@ export default function Registration() {
                     <br />
                     <br />
                     <h3 style={{ marginLeft: "60px", marginTop: -20 }}>
-                      <b>TRAVEL AGENT&nbsp;&nbsp;REGISTERATION</b>
+                      <b>TRAVEL AGENT&nbsp;&nbsp;REGISTRATION</b>
                     </h3>
                     <br />
                     <br />
@@ -93,6 +104,7 @@ export default function Registration() {
                           className="form-control"
                           placeholder="Enter your Full name"
                           required
+                          value={FullName}
                           onChange={(e) => setFullName(e.target.value)}
                         />
                       </div>
@@ -113,6 +125,7 @@ export default function Registration() {
                           className="form-control"
                           placeholder="Enter your E-mail address"
                           required
+                          value={Email}
                           onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
@@ -132,6 +145,7 @@ export default function Registration() {
                           className="form-control"
                           placeholder="Enter your NIC number"
                           required
+                          value={NIC}
                           onChange={(e) => setNIC(e.target.value)}
                         />
                       </div>
@@ -152,6 +166,7 @@ export default function Registration() {
                           pattern="[0-9]{10}"
                           placeholder="Enter your phone number"
                           required
+                          value={PhoneNumber}
                           onChange={(e) => setPhoneNumber(e.target.value)}
                         />
                       </div>
@@ -173,6 +188,7 @@ export default function Registration() {
                           data-toggle="tooltip"
                           data-placement="center"
                           required
+                          value={PasswordHash}
                           onChange={(e) => setPasswordHash(e.target.value)}
                         />
                       </div>
@@ -191,10 +207,16 @@ export default function Registration() {
                           type="password"
                           className="form-control"
                           placeholder="Enter your confirm password"
+                          value={ConfirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                       </div>
                     </div>
+                    {error && (
+                      <div className="alert alert-danger" role="alert">
+                        {error}
+                      </div>
+                    )}
                     <div className="row">
                       <div className="col-md">
                         <Button
@@ -213,7 +235,8 @@ export default function Registration() {
                       </div>
                       <div className="col-md">
                         <Button
-                          type="submit"
+                          type="button"
+                          onClick={resetForm}
                           style={{
                             marginLeft: "-30px",
                             background: "#368BC1",

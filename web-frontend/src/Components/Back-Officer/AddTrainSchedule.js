@@ -13,6 +13,7 @@ export default function AddTrainSchedule() {
   const [IsActive, setIsActive] = useState(true);
   const [StationName, setStationName] = useState(""); // New station name input
   const [StationTime, setStationTime] = useState(""); // New station time input
+  const [error, setError] = useState(""); // State for error messages
 
   const handleRemoveStation = (index) => {
     const updatedStations = [...Stations];
@@ -21,14 +22,19 @@ export default function AddTrainSchedule() {
   };
 
   const handleAddStation = () => {
-    const newStation = {
-      StationName,
-      Time: StationTime,
-    };
+    if (StationName && StationTime) {
+      const newStation = {
+        StationName,
+        Time: StationTime,
+      };
 
-    setStations([...Stations, newStation]); // Add the new station to the array
-    setStationName(""); // Clear the input fields
-    setStationTime("");
+      setStations([...Stations, newStation]); // Add the new station to the array
+      setStationName(""); // Clear the input fields
+      setStationTime("");
+      setError(""); // Clear the error message
+    } else {
+      setError("Please provide both station name and time.");
+    }
   };
 
   const handleSubmit = (e) => {
@@ -55,10 +61,23 @@ export default function AddTrainSchedule() {
       })
       .catch((error) => {
         // Handle errors
-        window.alert("Error adding train. Please try again.");
+        setError("Error adding train. Please try again.");
         console.error("Error adding train", error);
         // Display error message (you can implement this part)
       });
+  };
+
+  const handleCancel = () => {
+    // Clear all form fields and error messages
+    setTrainName("");
+    setTrainNumber("");
+    setTrainSeats(0);
+    setUnitPrice(0);
+    setStations([]);
+    setIsActive(true);
+    setStationName("");
+    setStationTime("");
+    setError(""); // Clear the error message
   };
 
   return (
@@ -71,7 +90,7 @@ export default function AddTrainSchedule() {
         <div
           style={{
             width: 800,
-            background: "#DBE9FA",
+            background: "#DBEAFB",
             borderRadius: "20px",
             padding: "20px",
           }}
@@ -88,11 +107,11 @@ export default function AddTrainSchedule() {
           />
           <div className="card-body">
             <form onSubmit={handleSubmit}>
-              <h2 style={{ marginTop: -100 }}>Add Train Schedule</h2>
+              <h2 style={{ marginTop: -140 }}>Add Train Schedule</h2>
 
               <div className="row">
                 <div className="col-md-6">
-                  <div className="form-group" style={{ marginTop: 20 }}>
+                  <div className="form-group" style={{ marginTop: 50 }}>
                     1. Train Name
                     <input
                       type="text"
@@ -105,7 +124,7 @@ export default function AddTrainSchedule() {
                   </div>
                 </div>
                 <div className="col-md-6">
-                  <div className="form-group" style={{ marginTop: 20 }}>
+                  <div className="form-group" style={{ marginTop: 50 }}>
                     2. Train Number
                     <input
                       type="text"
@@ -128,13 +147,9 @@ export default function AddTrainSchedule() {
                       className="form-control"
                       placeholder="Number of Seats"
                       value={TrainSeats}
-                      onChange={(e) => {
-                        const newValue = Math.min(
-                          Math.max(parseInt(e.target.value), 1),
-                          5
-                        );
-                        setTrainSeats(newValue);
-                      }}
+                      onChange={(e) =>
+                        setTrainSeats(Math.max(1, parseInt(e.target.value)))
+                      }
                       required
                       min="1"
                     />
@@ -144,7 +159,7 @@ export default function AddTrainSchedule() {
                   <div className="form-group" style={{ marginTop: 15 }}>
                     4. Unit Price
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       placeholder="Unit price"
                       value={UnitPrice}
@@ -261,6 +276,12 @@ export default function AddTrainSchedule() {
                 </div>
               </div>
 
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div>
+              )}
+
               <div className="row" style={{ marginTop: 20 }}>
                 <div className="col-md">
                   <Button
@@ -283,6 +304,7 @@ export default function AddTrainSchedule() {
                 <div className="col-md">
                   <Button
                     type="button"
+                    onClick={handleCancel}
                     style={{
                       marginLeft: "140px",
                       background: "#FFA500",

@@ -6,6 +6,7 @@ import axios from "axios";
 export default function TravelerAccountManage() {
   const [travelers, setTravelers] = useState([]);
   const [searchKey, setSearchKey] = useState("");
+  const [error, setError] = useState(""); // State for error messages
 
   useEffect(() => {
     retrieveTravelers();
@@ -37,7 +38,15 @@ export default function TravelerAccountManage() {
       .then((res) => {
         if (res.status === 200) {
           retrieveTravelers(); // Refresh the traveler list after activation
+        } else {
+          setError("Failed to activate the traveler. Please try again.");
         }
+      })
+      .catch((error) => {
+        setError(
+          "An error occurred while activating the traveler. Please try again later."
+        );
+        console.error("Error activating traveler:", error);
       });
   };
 
@@ -47,7 +56,15 @@ export default function TravelerAccountManage() {
       .then((res) => {
         if (res.status === 200) {
           retrieveTravelers(); // Refresh the traveler list after deactivation
+        } else {
+          setError("Failed to deactivate the traveler. Please try again.");
         }
+      })
+      .catch((error) => {
+        setError(
+          "An error occurred while deactivating the traveler. Please try again later."
+        );
+        console.error("Error deactivating traveler:", error);
       });
   };
 
@@ -66,7 +83,7 @@ export default function TravelerAccountManage() {
                 marginTop: 30,
               }}
             >
-              <b>TRAVELERS ACCOUNT MANAGEMENT</b>
+              <b>TRAVELER ACCOUNTS MANAGEMENT</b>
             </h3>
             <br />
             <div
@@ -81,6 +98,11 @@ export default function TravelerAccountManage() {
               />
               <br />
             </div>
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
             <table className="table">
               <thead>
                 <tr bgcolor="#2B3856">
@@ -88,7 +110,10 @@ export default function TravelerAccountManage() {
                     <font color="#fff">No</font>
                   </th>
                   <th>
-                    <font color="#fff">Full Name</font>
+                    <font color="#fff">First Name</font>
+                  </th>
+                  <th>
+                    <font color="#fff">Last Name</font>
                   </th>
                   <th>
                     <font color="#fff">Email Address</font>
@@ -111,7 +136,8 @@ export default function TravelerAccountManage() {
                 {travelers.map((traveler, index) => (
                   <tr key={traveler.nic}>
                     <td>{index + 1}</td>
-                    <td>{traveler.fullName}</td>
+                    <td>{traveler.firstName}</td>
+                    <td>{traveler.lastName}</td>
                     <td>{traveler.email}</td>
                     <td>{traveler.nic}</td>
                     <td>{traveler.phone}</td>

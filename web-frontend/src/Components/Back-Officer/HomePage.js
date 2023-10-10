@@ -7,6 +7,7 @@ export default function TravelerAccountManage() {
   const [trainSchedule, setTrainSchedule] = useState([]);
   const [filteredTrainSchedule, setFilteredTrainSchedule] = useState([]);
   const [searchKey, setSearchKey] = useState("");
+  const [error, setError] = useState(""); // State for error messages
 
   useEffect(() => {
     retrieveTrainSchedule();
@@ -45,13 +46,13 @@ export default function TravelerAccountManage() {
           retrieveTrainSchedule();
         } else {
           // Handle error (e.g., display an error message)
-          window.alert("Failed to delete the train. Please try again.");
+          setError("Failed to delete the train. Please try again.");
         }
       } catch (error) {
         // Handle network error or any other unexpected errors
         console.error("Error deleting train:", error);
         // Display an error message
-        window.alert(
+        setError(
           "An error occurred while deleting the train. Please try again later."
         );
       }
@@ -116,7 +117,7 @@ export default function TravelerAccountManage() {
         </Button>
       </div>
       <div>
-        <div style={{ width: "90%", marginLeft: 90 }}>
+        <div style={{ width: "98%", marginLeft: 18 }}>
           <br />
           <br />
           <div align="center">
@@ -132,7 +133,7 @@ export default function TravelerAccountManage() {
             <br />
             <div
               className="col-md-3"
-              style={{ marginRight: "1300px", marginTop: "20px" }}
+              style={{ marginRight: "1500px", marginTop: "20px" }}
             >
               <input
                 type="text"
@@ -143,6 +144,11 @@ export default function TravelerAccountManage() {
               />
               <br />
             </div>
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
             <table className="table">
               <thead>
                 <tr bgcolor="#2B3856">
