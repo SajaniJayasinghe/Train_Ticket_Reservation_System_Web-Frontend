@@ -13,6 +13,7 @@ import BookingTickets from "./Components/TravelAgent/BookingTickets";
 import History from "./Components/Pages/History";
 import Contactus from "./Components/Pages/Contactus";
 import TermsConditions from "./Components/Pages/TermsConditions";
+import TravelerRegistration from "./Components/TravelAgent/TravelerRegistration";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <Route path="/signup" element={<Registration />} />
         <Route path="/backofficerhome" element={<BackOfficerHome />} />
         <Route path="/addTrainSchedule" element={<AddTrainSchedule />} />
-        <Route path="/updateTrainSchedule" element={<UpdateTrainSchedule />} />
+        <Route path="/Trains/:trainID" element={<UpdateTrainSchedule />} />
         <Route path="/travelAgentHome" element={<TravelAgentHome />} />
         <Route
           path="/travelerAccountManage"
@@ -37,6 +38,10 @@ function App() {
         <Route path="/history" element={<History />} />
         <Route path="/contactus" element={<Contactus />} />
         <Route path="/termsconditions" element={<TermsConditions />} />
+        <Route
+          path="/travelerRegistration"
+          element={<TravelerRegistration />}
+        />
       </Routes>
     </BrowserRouter>
   );
