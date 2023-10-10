@@ -1,8 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import UserNavBar from "../Layouts/UserNavBar";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
 
-export default function HomePage() {
+export default function TravelerAccountManage() {
+  const [trainSchedule, setTrainSchedule] = useState([]);
+  const [filteredTrainSchedule, setFilteredTrainSchedule] = useState([]);
+  const [searchKey, setSearchKey] = useState("");
+
+  useEffect(() => {
+    retrieveTrainSchedule();
+  }, []);
+
+  const retrieveTrainSchedule = () => {
+    axios.get("https://localhost:7280/api/Trains").then((res) => {
+      if (res.status === 200) {
+        setTrainSchedule(res.data);
+        setFilteredTrainSchedule(res.data); // Initialize filtered data with all data
+      }
+    });
+  };
+
+  const handleSearchArea = (e) => {
+    const newSearchKey = e.target.value;
+    setSearchKey(newSearchKey);
+
+    // Filter trains based on the search key (train name)
+    const filteredTrains = trainSchedule.filter((train) =>
+      train.trainName.toLowerCase().includes(newSearchKey.toLowerCase())
+    );
+
+    setFilteredTrainSchedule(filteredTrains);
+  };
+
+  const handleDelete = (trainId) => {
+    if (window.confirm("Are you sure you want to delete this train?")) {
+      axios
+        .delete(`https://localhost:7280/api/Trains/${trainId}`)
+        .then((res) => {
+          if (res.status === 200) {
+            // Refresh the train schedule data after deletion
+            retrieveTrainSchedule();
+          } else {
+            // Handle error
+          }
+        })
+        .catch((error) => {
+          // Handle error
+        });
+    }
+  };
+
   return (
     <div>
       <UserNavBar />
@@ -69,18 +117,22 @@ export default function HomePage() {
               style={{
                 fontFamily: "times new roman",
                 fontSize: "40px",
-                marginTop: 80,
+                marginTop: 60,
               }}
             >
-              <b>TRAINS SCHEDULE</b>
+              <b>TRAIN SCHEDULE MANAGEMENT</b>
             </h3>
             <br />
-            <div className="col-md-3" style={{ marginRight: "1300px" }}>
+            <div
+              className="col-md-3"
+              style={{ marginRight: "1300px", marginTop: "20px" }}
+            >
               <input
                 type="text"
                 className="form-control"
                 placeholder="Search Train Name"
-                // onChange={this.handleSearchArea}
+                onChange={handleSearchArea}
+                value={searchKey}
               />
               <br />
             </div>
@@ -108,49 +160,60 @@ export default function HomePage() {
                   <th>
                     <font color="#fff">Train Status</font>
                   </th>
+                  <th>
+                    <font color="#fff">Action</font>
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {/* {filteredCourses.map((course, index) => ( */}
-                {/* <tr key={course._id}> */}
-                <tr>
-                  {/* <th scope="row">{index + 1}</th> */}
-                  <td>1</td>
-                  <td>sajani</td>
-                  <td>T123</td>
-                  <td>Galle</td>
-                  <td>52</td>
-                  <td>Rs.100.00</td>
-                  <td>
-                    <Button
+                {filteredTrainSchedule.map((train, index) => (
+                  <tr key={train.id}>
+                    <td>{index + 1}</td>
+                    <td>{train.trainName}</td>
+                    <td>{train.trainNumber}</td>
+                    <td>
+                      {train.stations
+                        .map((station) => station.stationName)
+                        .join(", ")}
+                    </td>
+                    <td>{train.trainSeats}</td>
+                    <td>{train.unitPrice}</td>
+                    <td
                       style={{
-                        background: "#004225",
-                        flex: "1",
-                        color: "#ffff",
-                        marginRight: "10px",
-                        borderRadius: 5,
+                        fontWeight: "bold",
+                        color: train.isActive ? "#004225" : "red",
                       }}
-                      href="/updateTrainSchedule"
-                      //   onClick={() => handleActivateUser(user.id)}
                     >
-                      Edit
-                    </Button>
-
-                    <Button
-                      style={{
-                        background: "#B21807",
-                        flex: "1",
-                        color: "#ffff",
-                        marginRight: "10px",
-                        borderRadius: 5,
-                      }}
-                      //   onClick={() => handleActivateUser(user.id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-                {/* ))} */}
+                      {train.isActive ? "Available" : "Unavailable"}
+                    </td>
+                    <td>
+                      <Button
+                        style={{
+                          background: "#004225",
+                          flex: "1",
+                          color: "#ffff",
+                          marginRight: "10px",
+                          borderRadius: 5,
+                        }}
+                        href={`/Trains/${train.id}`}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        style={{
+                          background: "#B21807",
+                          flex: "1",
+                          color: "#ffff",
+                          marginRight: "10px",
+                          borderRadius: 5,
+                        }}
+                        onClick={() => handleDelete(train.id)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

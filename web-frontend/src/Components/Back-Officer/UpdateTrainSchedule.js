@@ -1,28 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import UserNavBar from "../Layouts/UserNavBar";
 import Footer from "../Layouts/footer";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
 
 export default function UpdateTrainSchedule() {
   const trainStations = ["Station A", "Station B", "Station C", "Station D"];
-  const trainStatus = ["Available", "Unavailable"];
+
+  const [trainName, setTrainName] = useState("");
+  const [trainNumber, setTrainNumber] = useState("");
+  const [stations, setStations] = useState("");
+  const [trainSeats, setTrainSeats] = useState("");
+  const [unitPrice, setUnitPrice] = useState("");
+  const [trainStartTime, setTrainStartTime] = useState("");
+  const [isActive, setIsActive] = useState("");
+
+  const params = useParams();
+  const trainID = params.trainID;
+
+  useEffect(() => {
+    axios.get(`https://localhost:7280/api/Trains/${trainID}`).then((res) => {
+      if (res.status === 200) {
+        setTrainName(res.data.trainName);
+        setTrainNumber(res.data.trainNumber);
+        setStations(res.data.stations);
+        setTrainSeats(res.data.trainSeats);
+        setUnitPrice(res.data.unitPrice);
+        setTrainStartTime(res.data.trainStartTime);
+        setIsActive(res.data.isActive);
+      }
+      console.log(res.data);
+    });
+  }, []);
 
   return (
     <div>
       <UserNavBar />
       <div
-        class="row d-flex align-items-center justify-content-center"
-        style={{ marginTop: 100 }}
+        className="row d-flex align-items-center justify-content-center"
+        style={{ marginTop: 80 }}
       >
         <div
           style={{
             width: 800,
             background: "#DBE9FA",
-            height: 500,
+            height: 570,
             borderRadius: "20px",
           }}
         >
-          <div class="card-body">
+          <div className="card-body">
             <form>
               <div className="col-md-6" style={{ marginTop: 60 }}>
                 <h2>Update Train Schedule</h2>
@@ -30,8 +57,8 @@ export default function UpdateTrainSchedule() {
               <div
                 style={{
                   position: "absolute",
-                  top: "29%",
-                  left: "65%",
+                  top: "25%",
+                  left: "66%",
                   transform: "translate(-50%, -50%)",
                 }}
               >
@@ -41,61 +68,93 @@ export default function UpdateTrainSchedule() {
                   style={{ width: "70%", height: "auto" }}
                 />
               </div>
-              <div class="row">
-                <div class="form-group col-md-6" style={{ marginTop: 60 }}>
+              <div className="row">
+                <div className="form-group col-md-6" style={{ marginTop: 60 }}>
                   1. Train Name
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Train name"
+                    value={trainName}
+                    // onChange={(e) => setTrainName(e.target.value)}
+                    required
                   />
                 </div>
-                <div class="form-group col-md-6" style={{ marginTop: 60 }}>
+                <div className="form-group col-md-6" style={{ marginTop: 60 }}>
                   2. Train Number
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Train number"
+                    value={trainNumber}
+                    // onChange={(e) => setTrainNumber(e.target.value)}
+                    required
                   />
                 </div>
-                <div class="form-group col-md-6" style={{ marginTop: 14 }}>
+                <div className="form-group col-md-6" style={{ marginTop: 14 }}>
                   3. Number of Seats
                   <input
-                    type="text"
-                    class="form-control"
-                    placeholder=" Number of Seats"
+                    type="number"
+                    className="form-control"
+                    placeholder="Number of Seats"
+                    value={trainSeats}
+                    // onChange={(e) => {
+                    //   const newValue = Math.min(
+                    //     Math.max(parseInt(e.target.value), 1),
+                    //     5
+                    //   );
+                    //   setTrainSeats(newValue);
+                    // }}
+                    required
+                    min="1" // Minimum value
                   />
                 </div>
-                <div class="form-group col-md-6" style={{ marginTop: 14 }}>
-                  4. Train Stations
+
+                <div className="form-group col-md-6" style={{ marginTop: 14 }}>
+                  4. Unit Price
                   <input
                     type="text"
-                    class="form-control"
-                    placeholder="Train stations"
+                    className="form-control"
+                    placeholder="Unit price"
+                    value={unitPrice}
+                    // onChange={(e) => setUnitPrice(e.target.value)}
+                    required
                   />
                 </div>
-                <div class="form-group col-md-6" style={{ marginTop: 14 }}>
-                  <label>5. Select Station:</label>
-                  <select name="selectedStation" className="form-control">
-                    <option value="">Select a station</option>
-                    {trainStations.map((station, index) => (
-                      <option key={index} value={station}>
-                        {station}
-                      </option>
-                    ))}
+                <div className="form-group" style={{ marginTop: 14 }}>
+                  5. Train Stations
+                  <select
+                    className="form-control"
+                    value={stations}
+                    // onChange={(e) => setStations(e.target.value)}
+                  >
+                    <option value="Select">Select</option>
+                    <option value="">A</option>
                   </select>
                 </div>
-                <div class="form-group col-md-6" style={{ marginTop: 14 }}>
-                  <label>5. Select Status:</label>
-                  <select name="selectedStatus" className="form-control">
-                    <option value="">Select a status</option>
-                    {trainStatus.map((status, index) => (
-                      <option key={index} value={status}>
-                        {status}
-                      </option>
-                    ))}
+
+                <div className="form-group col-md-6" style={{ marginTop: 14 }}>
+                  6. Status
+                  <select
+                    className="form-control"
+                    value={isActive}
+                    // onChange={(e) => setIsActive(e.target.value === "true")}
+                  >
+                    <option value="true">Available</option>
                   </select>
                 </div>
+
+                <div className="form-group col-md-6" style={{ marginTop: 14 }}>
+                  7. Time
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={trainStartTime}
+                    // placeholder="Train Time"
+                    required
+                  />
+                </div>
+
                 <div className="row">
                   <div className="col-md">
                     <Button
@@ -103,12 +162,12 @@ export default function UpdateTrainSchedule() {
                       style={{
                         background: "#3090C7",
                         width: "40%",
-                        marginLeft: "380px",
+                        marginLeft: "400px",
                         height: "auto",
                         color: "BLACK",
                         borderRadius: 5,
                         fontSize: "15px",
-                        marginTop: "40px",
+                        marginTop: "25px",
                       }}
                     >
                       <i className="fa fa-check-circle"></i>&nbsp;{" "}
@@ -117,16 +176,16 @@ export default function UpdateTrainSchedule() {
                   </div>
                   <div className="col-md">
                     <Button
-                      type="submit"
+                      type="button"
                       style={{
-                        marginLeft: "105px",
+                        marginLeft: "90px",
                         background: "#FFA500",
                         width: "60%",
                         height: "auto",
                         color: "BLACK",
                         fontSize: "15px",
                         borderRadius: 5,
-                        marginTop: "40px",
+                        marginTop: "25px",
                       }}
                     >
                       <i className="fa fa-times-circle"></i>&nbsp;<b> CANCEL</b>
