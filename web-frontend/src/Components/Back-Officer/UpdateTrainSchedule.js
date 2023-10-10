@@ -8,7 +8,7 @@ import axios from "axios";
 export default function UpdateTrainSchedule() {
   const [trainName, setTrainName] = useState("");
   const [trainNumber, setTrainNumber] = useState("");
-  const [stations, setStations] = useState("");
+  const [stations, setStations] = useState([]);
   const [trainSeats, setTrainSeats] = useState("");
   const [unitPrice, setUnitPrice] = useState("");
   const [trainStartTime, setTrainStartTime] = useState("");
@@ -22,7 +22,7 @@ export default function UpdateTrainSchedule() {
       if (res.status === 200) {
         setTrainName(res.data.trainName);
         setTrainNumber(res.data.trainNumber);
-        setStations(res.data.stations);
+        setStations(res.data.stations || []);
         setTrainSeats(res.data.trainSeats);
         setUnitPrice(res.data.unitPrice);
         setTrainStartTime(res.data.trainStartTime);
@@ -30,7 +30,7 @@ export default function UpdateTrainSchedule() {
       }
       console.log(res.data);
     });
-  }, []);
+  }, [trainID]);
 
   const handleStatusChange = (e) => {
     setIsActive(e.target.value);
@@ -41,6 +41,7 @@ export default function UpdateTrainSchedule() {
 
     // Prepare the updated train schedule data
     const updatedTrainSchedule = {
+      id: trainID,
       trainName,
       trainNumber,
       stations,
@@ -65,6 +66,30 @@ export default function UpdateTrainSchedule() {
       .catch((error) => {
         console.error("Error updating train schedule:", error);
       });
+  };
+
+  // Function to add a new station to the stations array
+  const addStation = () => {
+    const newStation = {
+      StationName: "", // Initialize with empty values
+      Time: "",
+    };
+
+    setStations([...stations, newStation]);
+  };
+
+  // Function to update station name and time in the stations array
+  const updateStation = (index, fieldName, value) => {
+    const updatedStations = [...stations];
+    updatedStations[index][fieldName] = value;
+    setStations(updatedStations);
+  };
+
+  // Function to remove a station from the stations array
+  const removeStation = (index) => {
+    const updatedStations = [...stations];
+    updatedStations.splice(index, 1);
+    setStations(updatedStations);
   };
 
   return (
@@ -155,14 +180,37 @@ export default function UpdateTrainSchedule() {
                 </div>
                 <div className="form-group" style={{ marginTop: 14 }}>
                   5. Train Stations
-                  <select
-                    className="form-control"
-                    value={stations}
-                    onChange={(e) => setStations(e.target.value)}
-                  >
-                    <option value="Select">Select</option>
-                    <option value="">A</option>
-                  </select>
+                  <div>
+                    <button type="button" onClick={addStation}>
+                      Add Station
+                    </button>
+                    {stations.map((station, index) => (
+                      <div key={index}>
+                        <input
+                          type="text"
+                          placeholder="Station Name"
+                          value={station.stationName}
+                          onChange={(e) =>
+                            updateStation(index, "StationName", e.target.value)
+                          }
+                        />
+                        <input
+                          type="text"
+                          placeholder="Station Time"
+                          value={station.time}
+                          onChange={(e) =>
+                            updateStation(index, "Time", e.target.value)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeStation(index)}
+                        >
+                          Remove Station
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="form-group col-md-6" style={{ marginTop: 14 }}>
