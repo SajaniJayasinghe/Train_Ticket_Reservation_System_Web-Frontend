@@ -141,6 +141,8 @@ export default function AddTrainSchedule() {
   const [UnitPrice, setUnitPrice] = useState(0);
   const [Stations, setStations] = useState([]);
   const [IsActive, setIsActive] = useState(true);
+  const [StationName, setStationName] = useState(""); // New station name input
+  const [StationTime, setStationTime] = useState(""); // New station time input
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -166,6 +168,18 @@ export default function AddTrainSchedule() {
         // Handle errors
         console.error("Error adding train", error);
       });
+  };
+
+  // Function to add a new station to the Stations array
+  const addStation = () => {
+    const newStation = {
+      StationName,
+      Time: StationTime,
+    };
+
+    setStations([...Stations, newStation]); // Add the new station to the array
+    setStationName(""); // Clear the input fields
+    setStationTime("");
   };
 
   return (
@@ -257,15 +271,30 @@ export default function AddTrainSchedule() {
                 </div>
                 <div className="form-group" style={{ marginTop: 14 }}>
                   5. Train Stations
-                  <select
-                    className="form-control"
-                    value={Stations}
-                    onChange={(e) => setStations(e.target.value)}
-                  >
-                    <option value="Select">Select</option>
-                    <option value="">A</option>
-                    <option value="B">B</option>
-                  </select>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Station Name"
+                      value={StationName}
+                      onChange={(e) => setStationName(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Station Time"
+                      value={StationTime}
+                      onChange={(e) => setStationTime(e.target.value)}
+                    />
+                    <button type="button" onClick={addStation}>
+                      Add Station
+                    </button>
+                  </div>
+                  <ul>
+                    {Stations.map((station, index) => (
+                      <li key={index}>
+                        {station.StationName} - {station.Time}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
                 <div className="form-group col-md-6" style={{ marginTop: 14 }}>
