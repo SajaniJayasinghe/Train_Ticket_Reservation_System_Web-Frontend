@@ -18,6 +18,22 @@ export default function HomePage() {
         <Button
           variant="contained"
           style={{
+            background: "#151B54",
+            flex: "1",
+            color: "#ffff",
+            marginRight: "10px",
+            borderRadius: 5,
+          }}
+          href="/travelerRegistration"
+          disableElevation
+          type="submit"
+        >
+          <b>Traveler Registration</b>
+        </Button>
+
+        <Button
+          variant="contained"
+          style={{
             background: "#B21807",
             flex: "1",
             color: "#ffff",
