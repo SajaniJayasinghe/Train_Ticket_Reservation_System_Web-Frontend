@@ -14,6 +14,7 @@ import History from "./Components/Pages/History";
 import Contactus from "./Components/Pages/Contactus";
 import TermsConditions from "./Components/Pages/TermsConditions";
 import TravelerRegistration from "./Components/TravelAgent/TravelerRegistration";
+import Profile from "./Components/TravelAgent/Profile";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           path="/travelerRegistration"
           element={<TravelerRegistration />}
         />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

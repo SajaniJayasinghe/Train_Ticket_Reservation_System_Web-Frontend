@@ -39,7 +39,7 @@ export default class TravelAgentNavbar extends Component {
                       color: "black",
                       fontFamily: "times new roman",
                       fontSize: 20,
-                      marginLeft: 280,
+                      marginLeft: 250,
                       marginRight: 20,
                     }}
                   >
@@ -55,7 +55,7 @@ export default class TravelAgentNavbar extends Component {
                       color: "black",
                       fontFamily: "times new roman",
                       fontSize: 20,
-                      marginLeft: 50,
+                      marginLeft: 30,
                       marginRight: 20,
                     }}
                   >
@@ -72,7 +72,7 @@ export default class TravelAgentNavbar extends Component {
                       color: "black",
                       fontFamily: "times new roman",
                       fontSize: 20,
-                      marginLeft: 50,
+                      marginLeft: 30,
                       marginRight: 20,
                     }}
                   >
@@ -88,7 +88,7 @@ export default class TravelAgentNavbar extends Component {
                       color: "black",
                       fontFamily: "times new roman",
                       fontSize: 20,
-                      marginLeft: 50,
+                      marginLeft: 30,
                       marginRight: 20,
                     }}
                   >
@@ -105,7 +105,7 @@ export default class TravelAgentNavbar extends Component {
                       color: "black",
                       fontFamily: "times new roman",
                       fontSize: 20,
-                      marginLeft: 50,
+                      marginLeft: 30,
                       marginRight: 20,
                     }}
                   >
@@ -121,11 +121,27 @@ export default class TravelAgentNavbar extends Component {
                       color: "black",
                       fontFamily: "times new roman",
                       fontSize: 20,
-                      marginLeft: 50,
+                      marginLeft: 30,
                       marginRight: 20,
                     }}
                   >
                     <b>Terms & Conditions</b>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    aria-current="page"
+                    href="/profile"
+                    style={{
+                      color: "black",
+                      fontFamily: "times new roman",
+                      fontSize: 20,
+                      marginLeft: 30,
+                      marginRight: 20,
+                    }}
+                  >
+                    <b>Profile</b>
                   </a>
                 </li>
               </ul>
