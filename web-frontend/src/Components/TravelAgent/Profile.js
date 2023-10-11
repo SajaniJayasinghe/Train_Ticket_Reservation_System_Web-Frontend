@@ -1,33 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // Import useParams from react-router-dom
 import TravelAgentNavbar from "../Layouts/TravelAgentNavbar";
 import Footer from "../Layouts/footer";
 import axios from "axios";
+import Button from "@material-ui/core/Button";
 
 export default function Profile() {
-  const [travelAgent, setTravelAgent] = useState({});
-  const { id } = useParams(); // Extract the ID from the URL
+  const [error, setError] = useState(""); // State for error messages
 
-  useEffect(() => {
-    // Define a function to retrieve the travel agent by ID
-    const retrieveTravelAgent = async () => {
+  // Function to handle the "Deactivate" button click
+  const handleDeactivate = async (agentId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to permanently deactivate your account?"
+    );
+    if (confirmed) {
       try {
-        const response = await axios.get(
-          `https://localhost:7280/api/TravelAgents/${id}`
+        // Make a DELETE request to the server to delete the account
+        const response = await axios.delete(
+          `https://localhost:7280/api/TravelAgents/${agentId}`
         );
+
         if (response.status === 200) {
-          setTravelAgent(response.data);
+          alert("Account deactivated successfully.");
+          // Redirect to the sign-in page or perform other desired actions
         } else {
-          console.error("API request failed with status:", response.status);
+          console.error(
+            "Deactivation request failed with status:",
+            response.status
+          );
         }
       } catch (error) {
-        console.error("API request error:", error);
+        console.error("Deactivation request error:", error);
       }
-    };
+    }
+  };
 
-    // Call retrieveTravelAgent with the user ID
-    retrieveTravelAgent();
-  }, [id]); // Include id in the dependency array to trigger the effect when it changes
+  // Function to handle the "Logout" button click
+  const handleLogout = () => {
+    const confirmed = window.confirm("Are you sure you want to log out?");
+    if (confirmed) {
+      window.location.href = "/signin"; // Replace with the appropriate redirection path
+    }
+  };
 
   return (
     <div>
@@ -44,7 +57,7 @@ export default function Profile() {
         >
           <img
             src="https://res.cloudinary.com/nibmsa/image/upload/v1696965037/1-removebg-preview_lac2ec.png"
-            style={{ width: 250, marginLeft: 60, marginTop: 0 }}
+            style={{ width: 250, marginLeft: 60, marginTop: 80 }}
             alt="Travel Agent Avatar"
           />
           <h3
@@ -53,7 +66,7 @@ export default function Profile() {
               marginTop: -10,
             }}
           >
-            <b>{travelAgent.FullName}</b>
+            <b></b>
           </h3>
           <div
             className="col-xl-5"
@@ -71,7 +84,6 @@ export default function Profile() {
                 type="text"
                 id="formFullName"
                 className="form-control"
-                value={travelAgent.FullName || ""}
                 readOnly
               />
             </div>
@@ -83,7 +95,6 @@ export default function Profile() {
                 type="text"
                 id="formEmail"
                 className="form-control"
-                value={travelAgent.Email || ""}
                 readOnly
               />
             </div>
@@ -95,7 +106,6 @@ export default function Profile() {
                 type="text"
                 id="formRole"
                 className="form-control"
-                value={travelAgent.Role || ""}
                 readOnly
               />
             </div>
@@ -107,7 +117,6 @@ export default function Profile() {
                 type="text"
                 id="formNIC"
                 className="form-control"
-                value={travelAgent.NIC || ""}
                 readOnly
               />
             </div>
@@ -119,9 +128,43 @@ export default function Profile() {
                 type="text"
                 id="formPhoneNumber"
                 className="form-control"
-                value={travelAgent.PhoneNumber || ""}
                 readOnly
               />
+            </div>
+            <div className="row">
+              <div className="col-md">
+                <Button
+                  type="submit"
+                  onClick={handleDeactivate}
+                  style={{
+                    background: "#931314",
+                    width: "120%",
+                    height: "auto",
+                    color: "white",
+                    borderRadius: 20,
+                    marginLeft: "-10px",
+                    marginTop: "10px",
+                  }}
+                >
+                  <i className="fa fa-check-circle"></i>&nbsp; Deactivate
+                </Button>
+              </div>
+              <div className="col-md">
+                <Button
+                  type="button"
+                  onClick={handleLogout}
+                  style={{
+                    background: "#151B54",
+                    width: "100%",
+                    height: "auto",
+                    color: "white",
+                    borderRadius: 20,
+                    marginTop: "10px",
+                  }}
+                >
+                  <i className="fa fa-times-circle"></i>&nbsp; Logout
+                </Button>
+              </div>
             </div>
           </div>
         </div>

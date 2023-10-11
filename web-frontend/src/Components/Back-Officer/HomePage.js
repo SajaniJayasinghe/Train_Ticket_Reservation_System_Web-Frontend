@@ -62,60 +62,7 @@ export default function TravelerAccountManage() {
   return (
     <div>
       <UserNavBar />
-      <div
-        className="buttons"
-        style={{
-          position: "absolute",
-          marginTop: "50px",
-          right: 0,
-          margin: "20px",
-        }}
-      >
-        <Button
-          variant="contained"
-          style={{
-            background: "#B21807",
-            flex: "1",
-            color: "#ffff",
-            marginRight: "10px",
-            borderRadius: 5,
-          }}
-          href="/addTrainSchedule"
-          disableElevation
-          type="submit"
-        >
-          <b>Add Train Schedule</b>
-        </Button>
-        <Button
-          variant="contained"
-          style={{
-            background: "#FF8C00",
-            flex: "1",
-            color: "#000000",
-            borderRadius: 5,
-          }}
-          href="/travelerAccountManage"
-          disableElevation
-          type="submit"
-        >
-          <b>Traveler Account Manage</b>
-        </Button>
-        <Button
-          variant="contained"
-          style={{
-            background: "#004225",
-            flex: "1",
-            color: "#ffff",
-            borderRadius: 5,
-            marginLeft: "10px",
-          }}
-          href="/backofficerreservation"
-          disableElevation
-          type="submit"
-        >
-          <b>Reservation</b>
-        </Button>
-      </div>
+
       <div>
         <div style={{ width: "98%", marginLeft: 18 }}>
           <br />
@@ -125,7 +72,7 @@ export default function TravelerAccountManage() {
               style={{
                 fontFamily: "times new roman",
                 fontSize: "40px",
-                marginTop: 60,
+                marginTop: 40,
               }}
             >
               <b>TRAIN SCHEDULE MANAGEMENT</b>
@@ -133,7 +80,7 @@ export default function TravelerAccountManage() {
             <br />
             <div
               className="col-md-3"
-              style={{ marginRight: "1500px", marginTop: "20px" }}
+              style={{ marginRight: "1500px", marginTop: "50px" }}
             >
               <input
                 type="text"
@@ -149,9 +96,63 @@ export default function TravelerAccountManage() {
                 {error}
               </div>
             )}
+            <div
+              className="buttons"
+              style={{
+                position: "absolute",
+                marginTop: "-70px",
+                right: 80,
+                margin: "-60px",
+              }}
+            >
+              <Button
+                variant="contained"
+                style={{
+                  background: "#123456",
+                  flex: "1",
+                  color: "#ffff",
+                  marginRight: "10px",
+                  borderRadius: 5,
+                }}
+                href="/addTrainSchedule"
+                disableElevation
+                type="submit"
+              >
+                <b>Add Train Schedule</b>
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  background: "#123456",
+                  flex: "1",
+                  color: "#ffff",
+                  borderRadius: 5,
+                }}
+                href="/travelerAccountManage"
+                disableElevation
+                type="submit"
+              >
+                <b>Traveler Account Manage</b>
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  background: "#123456",
+                  flex: "1",
+                  color: "#ffff",
+                  borderRadius: 5,
+                  marginLeft: "10px",
+                }}
+                href="/backofficerreservation"
+                disableElevation
+                type="submit"
+              >
+                <b>Reservation</b>
+              </Button>
+            </div>
             <table className="table">
               <thead>
-                <tr bgcolor="#2B3856">
+                <tr bgcolor="#4863A0">
                   <th>
                     <font color="#fff">No</font>
                   </th>
@@ -208,7 +209,7 @@ export default function TravelerAccountManage() {
                     <td>
                       <Button
                         style={{
-                          background: "#004225",
+                          background: "#2E8B57",
                           flex: "1",
                           color: "#ffff",
                           marginRight: "10px",
