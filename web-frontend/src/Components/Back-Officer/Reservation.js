@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import UserNavBar from "../Layouts/UserNavBar";
+import axios from "axios";
 
 export default function Reservation() {
+  const [reservations, setReservations] = useState([]);
+  const [searchKey, setSearchKey] = useState("");
+  const [filteredReservations, setFilteredReservations] = useState([]); // State to store filtered reservations
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    retrieveReservations();
+  }, []);
+
+  const retrieveReservations = () => {
+    axios.get("https://localhost:7280/api/Reservations").then((res) => {
+      if (res.status === 200) {
+        setReservations(res.data);
+        setFilteredReservations(res.data); // Initialize filtered reservations with all reservations
+      }
+    });
+  };
+
+  const handleSearchArea = (e) => {
+    const newSearchKey = e.target.value;
+    setSearchKey(newSearchKey);
+
+    // Filter reservations based on the search key (NIC)
+    const filteredReservations = reservations.filter((reservation) =>
+      reservation.nic.includes(newSearchKey)
+    );
+
+    setFilteredReservations(filteredReservations); // Update filtered reservations
+  };
+
   return (
     <div>
       <UserNavBar />
@@ -24,8 +55,8 @@ export default function Reservation() {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search Train Name"
-                // onChange={this.handleSearchArea}
+                placeholder="Search NIC"
+                onChange={handleSearchArea} // Use handleSearchArea function
               />
               <br />
             </div>
@@ -42,29 +73,39 @@ export default function Reservation() {
                     <font color="#fff">Train Name</font>
                   </th>
                   <th>
-                    <font color="#fff">Booking Date</font>
-                  </th>
-                  <th>
                     <font color="#fff">Reservation Date</font>
                   </th>
                   <th>
-                    <font color="#fff">No of Seats</font>
+                    <font color="#fff">Booking Date</font>
+                  </th>
+                  <th>
+                    <font color="#fff">NIC</font>
+                  </th>
+                  <th>
+                    <font color="#fff">From Station</font>
+                  </th>
+                  <th>
+                    <font color="#fff">To Station</font>
+                  </th>
+                  <th>
+                    <font color="#fff">No Of Seats</font>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {/* {filteredCourses.map((course, index) => ( */}
-                {/* <tr key={course._id}> */}
-                <tr>
-                  {/* <th scope="row">{index + 1}</th> */}
-                  <td>1</td>
-                  <td>T123</td>
-                  <td>abc</td>
-                  <td>2023-1-2</td>
-                  <td>2023-2-1</td>
-                  <td>3</td>
-                </tr>
-                {/* ))} */}
+                {filteredReservations.map((reservation, index) => (
+                  <tr key={reservation.trainName}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{reservation.train}</td>
+                    <td>{reservation.trainName}</td>
+                    <td>{reservation.reservationDate}</td>
+                    <td>{reservation.bookingDate}</td>
+                    <td>{reservation.nic}</td>
+                    <td>{reservation.fromStation}</td>
+                    <td>{reservation.toStation}</td>
+                    <td>{reservation.numberOfSeats}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
