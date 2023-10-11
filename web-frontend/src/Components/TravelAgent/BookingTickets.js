@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TravelAgentNavbar from "../Layouts/TravelAgentNavbar";
 import Footer from "../Layouts/footer";
 import Button from "@material-ui/core/Button";
@@ -18,19 +18,6 @@ export default function BookingTickets() {
   const [successMessage, setSuccessMessage] = useState("");
   const [reservationCount, setReservationCount] = useState(0);
   const [createReservationError, setCreateReservationError] = useState("");
-
-  const stationOptions = ["Badulla", "Kandy", "Colombo"];
-
-  const resetForm = () => {
-    setNic("");
-    setNumberOfSeats(1);
-    setFromStation("");
-    setToStation("");
-    setReservationDate("");
-    setFilteredTrains([]);
-    setError("");
-    setSuccessMessage("");
-  };
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -73,59 +60,63 @@ export default function BookingTickets() {
     setTrainName(trainName);
     setTrain(trainNumber);
 
-    // Check if reservation count is more than 3 (since it's a maximum of 4 reservations)
     if (reservationCount >= 4) {
       setCreateReservationError(
         "You can create a maximum of 4 reservations per reference ID."
       );
-      return;
     } else {
-      setCreateReservationError(""); // Clear the error message if it was previously set.
+      const currentDate = new Date();
+      const bookingDateObject = new Date(bookingDate);
+      const reservationDateObject = new Date(reservationDate);
+
+      const differenceInDays = Math.floor(
+        (reservationDateObject - currentDate) / (1000 * 3600 * 24)
+      );
+
+      if (differenceInDays <= 0 || differenceInDays > 30) {
+        setError(
+          "Reservation date must be within 30 days from the booking date."
+        );
+      } else {
+        const newReservation = {
+          bookingDate,
+          reservationDate,
+          numberOfSeats,
+          fromStation,
+          toStation,
+          nic,
+          train: trainNumber, // Use trainNumber here
+          trainName,
+        };
+
+        axios
+          .post("https://localhost:7280/api/Reservations", newReservation)
+          .then((response) => {
+            console.log("Reservation added successfully", response.data);
+            setSuccessMessage("Reservation added successfully");
+            setError("");
+            window.location.href = "/reservationHistory";
+          })
+          .catch((error) => {
+            console.error("Error adding Reservation", error);
+            setError("Error adding Reservation");
+          });
+      }
     }
   };
 
-  // The handleCreateReservation function should be outside handleSelectTrain
-  const handleCreateReservation = () => {
-    const currentDate = new Date();
-    const bookingDateObject = new Date(bookingDate);
-    const reservationDateObject = new Date(reservationDate);
+  const stationOptions = ["Badulla", "Kandy", "Colombo"];
 
-    // Calculate the difference in days
-    const differenceInDays = Math.floor(
-      (reservationDateObject - currentDate) / (1000 * 3600 * 24)
-    );
-
-    // Check if reservationDate is within 30 days from bookingDate
-    if (differenceInDays <= 0 || differenceInDays > 30) {
-      setError(
-        "Reservation date must be within 30 days from the booking date."
-      );
-      return;
-    }
-
-    const newReservation = {
-      bookingDate,
-      reservationDate,
-      numberOfSeats,
-      fromStation,
-      toStation,
-      nic,
-      train: train,
-      trainName: trainName,
-    };
-
-    axios
-      .post("https://localhost:7280/api/Reservations", newReservation)
-      .then((response) => {
-        console.log("Reservation added successfully", response.data);
-        setSuccessMessage("Reservation added successfully");
-        setError("");
-        window.location.href = "/reservationHistory";
-      })
-      .catch((error) => {
-        console.error("Error adding Reservation", error);
-        setError("Error adding Reservation");
-      });
+  const resetForm = () => {
+    setNic("");
+    setNumberOfSeats(1);
+    setBookingDate("");
+    setFromStation("");
+    setToStation("");
+    setReservationDate("");
+    setFilteredTrains([]);
+    setError("");
+    setSuccessMessage("");
   };
 
   return (
