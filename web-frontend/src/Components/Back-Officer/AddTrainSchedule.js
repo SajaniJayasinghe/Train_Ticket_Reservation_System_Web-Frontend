@@ -11,6 +11,7 @@ export default function AddTrainSchedule() {
   const [UnitPrice, setUnitPrice] = useState(0);
   const [Stations, setStations] = useState([]);
   const [IsActive, setIsActive] = useState(true);
+  const [trainStartTime, setTrainStartTime] = useState("");
   const [StationName, setStationName] = useState(""); // New station name input
   const [StationTime, setStationTime] = useState(""); // New station time input
   const [error, setError] = useState(""); // State for error messages
@@ -188,7 +189,7 @@ export default function AddTrainSchedule() {
                         type="text"
                         className="form-control"
                         placeholder="Time"
-                        value={station.Time}
+                        value={station.s}
                         readOnly
                       />
                     </div>
@@ -265,12 +266,14 @@ export default function AddTrainSchedule() {
                 </div>
                 <div className="col-md-6">
                   <div className="form-group" style={{ marginTop: 15 }}>
-                    7. Time
+                    7. Start Time
                     <input
                       type="text"
                       className="form-control"
                       placeholder="Train Time"
                       required
+                      value={trainStartTime}
+                      onChange={(e) => setTrainStartTime(e.target.value)}
                     />
                   </div>
                 </div>
