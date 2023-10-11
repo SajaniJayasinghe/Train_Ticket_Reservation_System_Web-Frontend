@@ -91,6 +91,21 @@ export default function HomePage() {
               >
                 <b>Booking Tickets</b>
               </Button>
+              <Button
+                variant="contained"
+                style={{
+                  background: "#151B54",
+                  flex: "1",
+                  color: "#ffff",
+                  marginRight: "6px",
+                  borderRadius: 5,
+                }}
+                href="/reservationHistory"
+                disableElevation
+                type="submit"
+              >
+                <b>Reservation History</b>
+              </Button>
             </div>
             <div
               className="col-md-3"
