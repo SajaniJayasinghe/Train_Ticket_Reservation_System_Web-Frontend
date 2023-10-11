@@ -2,15 +2,26 @@ import React, { useState } from "react";
 import Footer from "../Layouts/footer";
 import NavBar from "../Layouts/NavBar";
 import Button from "@material-ui/core/Button";
-import axios from "axios"; // Import Axios
+import axios from "axios";
 
 export default function LoginPage() {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Role, setRole] = useState(null);
+  const [error, setError] = useState(""); // State for error messages
+
+  // Function to reset the form data
+  const resetForm = () => {
+    setEmail("");
+    setPassword("");
+    setError(""); // Clear any previous error messages
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    // Reset previous error messages
+    setError("");
 
     // Create an object with login credentials
     const loginData = {
@@ -36,13 +47,12 @@ export default function LoginPage() {
         }
       } else {
         // Handle login error, show a message to the user
-        console.error("Login failed");
-        alert("Login failed. Please check your credentials.");
+        setError("Login failed. Please check your credentials.");
       }
     } catch (error) {
       // Handle any errors from the POST request
       console.error("Login error:", error);
-      alert("An error occurred during login. Please try again later.");
+      setError("Password or Email is incorrect.");
     }
   };
 
@@ -133,6 +143,11 @@ export default function LoginPage() {
                             />
                           </div>
                         </div>
+                        {error && ( // Display error message if there's an error
+                          <div className="alert alert-danger" role="alert">
+                            {error}
+                          </div>
+                        )}
                         <div className="row">
                           <div className="col-md">
                             <Button
@@ -152,7 +167,8 @@ export default function LoginPage() {
                           </div>
                           <div className="col-md">
                             <Button
-                              type="reset"
+                              type="button"
+                              onClick={resetForm} // Call resetForm to clear the form data
                               style={{
                                 background: "#368BC1",
                                 width: "100%",
