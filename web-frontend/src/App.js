@@ -15,6 +15,7 @@ import Contactus from "./Components/Pages/Contactus";
 import TermsConditions from "./Components/Pages/TermsConditions";
 import TravelerRegistration from "./Components/TravelAgent/TravelerRegistration";
 import Profile from "./Components/TravelAgent/Profile";
+import BackOfficerProfile from "./Components/Back-Officer/BackOfficerProfile";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           element={<TravelerRegistration />}
         />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/backofficerprofile" element={<BackOfficerProfile />} />
       </Routes>
     </BrowserRouter>
   );

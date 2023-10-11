@@ -64,9 +64,9 @@ export default function HomePage() {
               <Button
                 variant="contained"
                 style={{
-                  background: "#FF8C00",
+                  background: "#2F539B",
                   flex: "1",
-                  color: "#000000",
+                  color: "#ffff",
                   marginRight: "6px",
                   borderRadius: 5,
                 }}
@@ -75,6 +75,21 @@ export default function HomePage() {
                 type="submit"
               >
                 <b>Taveler Registration</b>
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  background: "#006A4E",
+                  flex: "1",
+                  color: "#ffff",
+                  marginRight: "6px",
+                  borderRadius: 5,
+                }}
+                href="/bookingTickets"
+                disableElevation
+                type="submit"
+              >
+                <b>Booking Tickets</b>
               </Button>
             </div>
             <div
