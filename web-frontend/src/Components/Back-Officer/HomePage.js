@@ -7,6 +7,7 @@ export default function TravelerAccountManage() {
   const [trainSchedule, setTrainSchedule] = useState([]);
   const [filteredTrainSchedule, setFilteredTrainSchedule] = useState([]);
   const [searchKey, setSearchKey] = useState("");
+  const [error, setError] = useState(""); // State for error messages
 
   useEffect(() => {
     retrieveTrainSchedule();
@@ -18,6 +19,7 @@ export default function TravelerAccountManage() {
         setTrainSchedule(res.data);
         setFilteredTrainSchedule(res.data); // Initialize filtered data with all data
       }
+      console.log(res.data);
     });
   };
 
@@ -33,83 +35,36 @@ export default function TravelerAccountManage() {
     setFilteredTrainSchedule(filteredTrains);
   };
 
-  const handleDelete = (trainId) => {
+  const handleDelete = async (trainId) => {
     if (window.confirm("Are you sure you want to delete this train?")) {
-      axios
-        .delete(`https://localhost:7280/api/Trains/${trainId}`)
-        .then((res) => {
-          if (res.status === 200) {
-            // Refresh the train schedule data after deletion
-            retrieveTrainSchedule();
-          } else {
-            // Handle error
-          }
-        })
-        .catch((error) => {
-          // Handle error
-        });
+      try {
+        const response = await axios.delete(
+          `https://localhost:7280/api/Trains/${trainId}`
+        );
+        if (response.status === 200) {
+          // Refresh the train schedule data after deletion
+          retrieveTrainSchedule();
+        } else {
+          // Handle error (e.g., display an error message)
+          setError("Failed to delete the train. Please try again.");
+        }
+      } catch (error) {
+        // Handle network error or any other unexpected errors
+        console.error("Error deleting train:", error);
+        // Display an error message
+        setError(
+          "An error occurred while deleting the train. Please try again later."
+        );
+      }
     }
   };
 
   return (
     <div>
       <UserNavBar />
-      <div
-        className="buttons"
-        style={{
-          position: "absolute",
-          marginTop: "50px",
-          right: 0,
-          margin: "20px",
-        }}
-      >
-        <Button
-          variant="contained"
-          style={{
-            background: "#B21807",
-            flex: "1",
-            color: "#ffff",
-            marginRight: "10px",
-            borderRadius: 5,
-          }}
-          href="/addTrainSchedule"
-          disableElevation
-          type="submit"
-        >
-          <b>Add Train Schedule</b>
-        </Button>
-        <Button
-          variant="contained"
-          style={{
-            background: "#FF8C00",
-            flex: "1",
-            color: "#000000",
-            borderRadius: 5,
-          }}
-          href="/travelerAccountManage"
-          disableElevation
-          type="submit"
-        >
-          <b>Traveler Account Manage</b>
-        </Button>
-        <Button
-          variant="contained"
-          style={{
-            background: "#004225",
-            flex: "1",
-            color: "#ffff",
-            borderRadius: 5,
-            marginLeft: "10px",
-          }}
-          href="/backofficerreservation"
-          disableElevation
-          type="submit"
-        >
-          <b>Reservation</b>
-        </Button>
-      </div>
+
       <div>
-        <div style={{ width: "90%", marginLeft: 90 }}>
+        <div style={{ width: "98%", marginLeft: 18 }}>
           <br />
           <br />
           <div align="center">
@@ -117,7 +72,7 @@ export default function TravelerAccountManage() {
               style={{
                 fontFamily: "times new roman",
                 fontSize: "40px",
-                marginTop: 60,
+                marginTop: 40,
               }}
             >
               <b>TRAIN SCHEDULE MANAGEMENT</b>
@@ -125,7 +80,7 @@ export default function TravelerAccountManage() {
             <br />
             <div
               className="col-md-3"
-              style={{ marginRight: "1300px", marginTop: "20px" }}
+              style={{ marginRight: "1500px", marginTop: "50px" }}
             >
               <input
                 type="text"
@@ -136,9 +91,68 @@ export default function TravelerAccountManage() {
               />
               <br />
             </div>
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
+            <div
+              className="buttons"
+              style={{
+                position: "absolute",
+                marginTop: "-70px",
+                right: 80,
+                margin: "-60px",
+              }}
+            >
+              <Button
+                variant="contained"
+                style={{
+                  background: "#123456",
+                  flex: "1",
+                  color: "#ffff",
+                  marginRight: "10px",
+                  borderRadius: 5,
+                }}
+                href="/addTrainSchedule"
+                disableElevation
+                type="submit"
+              >
+                <b>Add Train Schedule</b>
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  background: "#123456",
+                  flex: "1",
+                  color: "#ffff",
+                  borderRadius: 5,
+                }}
+                href="/travelerAccountManage"
+                disableElevation
+                type="submit"
+              >
+                <b>Traveler Account Manage</b>
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  background: "#123456",
+                  flex: "1",
+                  color: "#ffff",
+                  borderRadius: 5,
+                  marginLeft: "10px",
+                }}
+                href="/backofficerreservation"
+                disableElevation
+                type="submit"
+              >
+                <b>Reservation</b>
+              </Button>
+            </div>
             <table className="table">
               <thead>
-                <tr bgcolor="#2B3856">
+                <tr bgcolor="#4863A0">
                   <th>
                     <font color="#fff">No</font>
                   </th>
@@ -161,7 +175,10 @@ export default function TravelerAccountManage() {
                     <font color="#fff">Train Status</font>
                   </th>
                   <th>
-                    <font color="#fff">Action</font>
+                    <font color="#fff">Edit Train</font>
+                  </th>
+                  <th>
+                    <font color="#fff">Delete Train</font>
                   </th>
                 </tr>
               </thead>
@@ -173,7 +190,10 @@ export default function TravelerAccountManage() {
                     <td>{train.trainNumber}</td>
                     <td>
                       {train.stations
-                        .map((station) => station.stationName)
+                        .map(
+                          (station) =>
+                            `${station.stationName} - ${station.time}`
+                        )
                         .join(", ")}
                     </td>
                     <td>{train.trainSeats}</td>
@@ -189,7 +209,7 @@ export default function TravelerAccountManage() {
                     <td>
                       <Button
                         style={{
-                          background: "#004225",
+                          background: "#2E8B57",
                           flex: "1",
                           color: "#ffff",
                           marginRight: "10px",
@@ -199,6 +219,8 @@ export default function TravelerAccountManage() {
                       >
                         Edit
                       </Button>
+                    </td>
+                    <td>
                       <Button
                         style={{
                           background: "#B21807",

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TravelAgentNavbar from "../Layouts/TravelAgentNavbar";
 import Footer from "../Layouts/footer";
 import Button from "@material-ui/core/Button";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function BookingTickets() {
+export default function UpdateBookingTickets() {
   const [bookingDate, setBookingDate] = useState("");
   const [reservationDate, setReservationDate] = useState("");
   const [numberOfSeats, setNumberOfSeats] = useState(1);
@@ -14,110 +15,63 @@ export default function BookingTickets() {
   const [train, setTrain] = useState("");
   const [trainName, setTrainName] = useState("");
   const [filteredTrains, setFilteredTrains] = useState([]);
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [reservationCount, setReservationCount] = useState(0);
-  const [createReservationError, setCreateReservationError] = useState("");
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-
-    if (
-      !nic ||
-      !numberOfSeats ||
-      !fromStation ||
-      !toStation ||
-      !reservationDate
-    ) {
-      setError("Please fill in all required fields before searching.");
-      return;
-    } else {
-      setError("");
-    }
-
-    const searchData = {
-      fromStation,
-      toStation,
-      reservationDate,
-    };
-
-    axios
-      .get("https://localhost:7280/api/Reservations/filterTrains", {
-        params: searchData,
-      })
-      .then((response) => {
-        console.log("Filtered Trains Retrieved Successfully", response.data);
-        setFilteredTrains(response.data);
-        setError("");
-      })
-      .catch((error) => {
-        console.error("Error retrieving filtered trains", error);
-        setError("Error retrieving filtered trains");
-      });
-  };
-
-  const handleSelectTrain = (trainName, trainNumber) => {
-    setTrainName(trainName);
-    setTrain(trainNumber);
-
-    if (reservationCount >= 4) {
-      setCreateReservationError(
-        "You can create a maximum of 4 reservations per reference ID."
-      );
-    } else {
-      const currentDate = new Date();
-      const bookingDateObject = new Date(bookingDate);
-      const reservationDateObject = new Date(reservationDate);
-
-      const differenceInDays = Math.floor(
-        (reservationDateObject - currentDate) / (1000 * 3600 * 24)
-      );
-
-      if (differenceInDays <= 0 || differenceInDays > 30) {
-        setError(
-          "Reservation date must be within 30 days from the booking date."
-        );
-      } else {
-        const newReservation = {
-          bookingDate,
-          reservationDate,
-          numberOfSeats,
-          fromStation,
-          toStation,
-          nic,
-          train: trainNumber, // Use trainNumber here
-          trainName,
-        };
-
-        axios
-          .post("https://localhost:7280/api/Reservations", newReservation)
-          .then((response) => {
-            console.log("Reservation added successfully", response.data);
-            setSuccessMessage("Reservation added successfully");
-            setError("");
-            window.location.href = "/reservationHistory";
-          })
-          .catch((error) => {
-            console.error("Error adding Reservation", error);
-            setError("Error adding Reservation");
-          });
-      }
-    }
-  };
 
   const stationOptions = ["Badulla", "Kandy", "Colombo"];
 
-  const resetForm = () => {
-    setNic("");
-    setNumberOfSeats(1);
-    setBookingDate("");
-    setFromStation("");
-    setToStation("");
-    setReservationDate("");
-    setFilteredTrains([]);
-    setError("");
-    setSuccessMessage("");
-  };
+  const params = useParams();
+  const reservationID = params.reservationID;
+
+  useEffect(() => {
+    axios
+      .get(`https://localhost:7280/api/Reservations/${reservationID}`)
+      .then((res) => {
+        if (res.statusCode === 200) {
+          setNic(res.data.nic);
+          setNumberOfSeats(res.data.numberOfSeats);
+          setFromStation(res.data.fromStation);
+          setToStation(res.data.toStation);
+          setReservationDate(res.data.reservationDate);
+          setTrain(res.data.train);
+          setTrainName(res.data.trainName);
+        }
+        console.log("Reservations retrieved successfully", res.data);
+        setReservationCount(res.data);
+      })
+      .catch((error) => {
+        console.error("Error retrieving reservations", error);
+      });
+  }, [reservationID]);
+
+  // const handleUpdateReservation = (e) => {
+  //   e.preventDefault();
+  //   const reservationUpdate = {
+  //     nic,
+  //     numberOfSeats,
+  //     fromStation,
+  //     toStation,
+  //     reservationDate,
+  //     train,
+  //     trainName,
+  //   };
+
+  //   axios
+  //     .put(
+  //       `https://localhost:7280/api/Reservations/${reservationID}`,
+  //       reservationUpdate
+  //     )
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         alert("Reservation Updated Successfully");
+  //         window.location.href = "/reservationHistory";
+  //       } else {
+  //         alert("Reservation Update Failed");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error updating reservation", error);
+  //     });
+  // };
 
   return (
     <div>
@@ -146,24 +100,10 @@ export default function BookingTickets() {
               height: "auto",
             }}
           >
-            <form onSubmit={handleSearch}>
-              <h2 style={{ marginTop: 30 }}>Book Your Tickets</h2>
-
-              {error && (
-                <div className="alert alert-danger" role="alert">
-                  {error}
-                </div>
-              )}
-              {successMessage && (
-                <div
-                  className="alert alert-success"
-                  role="alert"
-                  style={{ marginTop: 12 }}
-                >
-                  {successMessage}
-                </div>
-              )}
-
+            <form
+            //  onSubmit={handleSearch}
+            >
+              <h2 style={{ marginTop: 30 }}>Update Your Tickets</h2>
               <div className="row">
                 <div className="col-md-6">
                   <div className="form-group" style={{ marginTop: 50 }}>
@@ -173,7 +113,7 @@ export default function BookingTickets() {
                       className="form-control"
                       placeholder="NIC Number"
                       value={nic}
-                      onChange={(e) => setNic(e.target.value)}
+                      // onChange={(e) => setNic(e.target.value)}
                       required
                     />
                   </div>
@@ -186,7 +126,7 @@ export default function BookingTickets() {
                       className="form-control"
                       placeholder="Number of Seats"
                       value={numberOfSeats}
-                      onChange={(e) => setNumberOfSeats(e.target.value)}
+                      // onChange={(e) => setNumberOfSeats(e.target.value)}
                       required
                     />
                   </div>
@@ -308,7 +248,7 @@ export default function BookingTickets() {
                     <td>{train.trainNumber}</td>
                     <td>{train.trainSeats}</td>
                     <td>{train.fee}</td>
-                    <td>
+                    {/* <td>
                       <Button
                         onClick={() =>
                           handleSelectTrain(train.trainName, train.trainNumber)
@@ -321,8 +261,8 @@ export default function BookingTickets() {
                       >
                         Select
                       </Button>
-                    </td>
-                    <td>
+                    </td> */}
+                    {/* <td>
                       <Button
                         style={{
                           background: "#3090C7",
@@ -333,7 +273,7 @@ export default function BookingTickets() {
                       >
                         Cancel
                       </Button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
