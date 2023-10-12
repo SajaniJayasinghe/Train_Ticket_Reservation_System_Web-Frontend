@@ -15,8 +15,16 @@ export default function Reservation() {
   const retrieveReservations = () => {
     axios.get("https://localhost:7280/api/Reservations").then((res) => {
       if (res.status === 200) {
-        setReservations(res.data);
-        setFilteredReservations(res.data); // Initialize filtered reservations with all reservations
+        const reservationsData = res.data.map((reservation) => ({
+          ...reservation,
+          // Format the dates to display only the date part
+          reservationDate: new Date(
+            reservation.reservationDate
+          ).toLocaleDateString(),
+          bookingDate: new Date(reservation.bookingDate).toLocaleDateString(),
+        }));
+        setReservations(reservationsData);
+        setFilteredReservations(reservationsData); // Initialize filtered reservations with all reservations
       }
     });
   };

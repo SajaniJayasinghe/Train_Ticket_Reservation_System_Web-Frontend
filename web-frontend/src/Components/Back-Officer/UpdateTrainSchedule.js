@@ -291,7 +291,7 @@ export default function UpdateTrainSchedule() {
                 </div>
                 <div className="col-md-6">
                   <div className="form-group" style={{ marginTop: 15 }}>
-                    7. Time
+                    7. Start Time
                     <input
                       type="text"
                       className="form-control"

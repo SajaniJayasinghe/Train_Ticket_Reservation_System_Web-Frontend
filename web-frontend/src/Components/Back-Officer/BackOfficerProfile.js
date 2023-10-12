@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TravelAgentNavbar from "../Layouts/TravelAgentNavbar";
+import UserNavBar from "../Layouts/UserNavBar";
 import Footer from "../Layouts/footer";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
@@ -15,7 +15,7 @@ export default function BackOfficerProfile() {
 
   return (
     <div>
-      <TravelAgentNavbar />
+      <UserNavBar />
       <div className="row d-flex align-items-center justify-content-center">
         <div
           style={{
