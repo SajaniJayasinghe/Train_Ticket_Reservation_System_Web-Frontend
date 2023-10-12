@@ -13,6 +13,7 @@ export default function BookingTickets() {
   const [nic, setNic] = useState("");
   const [train, setTrain] = useState("");
   const [trainName, setTrainName] = useState("");
+  const [ticketPrice, setTicketPrice] = useState("");
   const [filteredTrains, setFilteredTrains] = useState([]);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -56,9 +57,10 @@ export default function BookingTickets() {
       });
   };
 
-  const handleSelectTrain = (trainName, trainNumber) => {
+  const handleSelectTrain = (trainName, id, fee) => {
     setTrainName(trainName);
-    setTrain(trainNumber);
+    setTrain(id);
+    setTicketPrice(fee);
 
     if (reservationCount >= 4) {
       setCreateReservationError(
@@ -87,8 +89,9 @@ export default function BookingTickets() {
           fromStation,
           toStation,
           nic,
-          train: trainNumber,
+          train: id, // Use trainNumber here
           trainName,
+          ticketPrice: fee,
         };
 
         axios
@@ -107,7 +110,18 @@ export default function BookingTickets() {
     }
   };
 
-  const stationOptions = ["Badulla", "Kandy", "Colombo"];
+  const stationOptions = [
+    "Badulla",
+    "Kandy",
+    "Colombo",
+    "Galle",
+    "Gill",
+    "Haputale",
+    "Haliela",
+    "Gampaha",
+    "Matara",
+    "Beliatta",
+  ];
 
   const resetForm = () => {
     setNic("");
@@ -308,12 +322,16 @@ export default function BookingTickets() {
                   <tr key={train.id}>
                     <td>{train.trainName}</td>
                     <td>{train.trainNumber}</td>
-                    <td>{train.trainSeats}</td>
+                    <td>{train.availableSeats}</td>
                     <td>{train.fee}</td>
                     <td>
                       <Button
                         onClick={() =>
-                          handleSelectTrain(train.trainName, train.trainNumber)
+                          handleSelectTrain(
+                            train.trainName,
+                            train.id,
+                            train.fee
+                          )
                         }
                         style={{
                           background: "#3090C7",
