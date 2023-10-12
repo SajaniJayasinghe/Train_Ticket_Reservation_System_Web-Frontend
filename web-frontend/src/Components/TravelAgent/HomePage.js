@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 
 export default function HomePage() {
-  const [trainSchedule, setTrainSchedule] = useState([]);
   const [filteredTrainSchedule, setFilteredTrainSchedule] = useState([]);
   const [searchKey, setSearchKey] = useState("");
   const [error, setError] = useState(""); // State for error messages
@@ -16,10 +15,8 @@ export default function HomePage() {
   const retrieveTrainSchedule = () => {
     axios.get("https://localhost:7280/api/Trains").then((res) => {
       if (res.status === 200) {
-        setTrainSchedule(res.data);
         setFilteredTrainSchedule(res.data); // Initialize filtered data with all data
       }
-      console.log(res.data);
     });
   };
 
@@ -28,7 +25,7 @@ export default function HomePage() {
     setSearchKey(newSearchKey);
 
     // Filter trains based on the search key (train name)
-    const filteredTrains = trainSchedule.filter((train) =>
+    const filteredTrains = filteredTrainSchedule.filter((train) =>
       train.trainName.toLowerCase().includes(newSearchKey.toLowerCase())
     );
 

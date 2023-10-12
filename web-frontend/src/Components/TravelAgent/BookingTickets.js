@@ -77,6 +77,8 @@ export default function BookingTickets() {
         setError(
           "Reservation date must be within 30 days from the booking date."
         );
+      } else if (numberOfSeats < 1 || numberOfSeats > 4) {
+        setError("Number of seats must be between 1 and 4.");
       } else {
         const newReservation = {
           bookingDate,
@@ -85,7 +87,7 @@ export default function BookingTickets() {
           fromStation,
           toStation,
           nic,
-          train: trainNumber, // Use trainNumber here
+          train: trainNumber,
           trainName,
         };
 
