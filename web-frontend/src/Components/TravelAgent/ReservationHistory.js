@@ -116,9 +116,9 @@ export default function ReservationHistory() {
                   <th>
                     <font color="#fff">No</font>
                   </th>
-                  <th>
+                  {/* <th>
                     <font color="#fff">Train Number</font>
-                  </th>
+                  </th> */}
                   <th>
                     <font color="#fff">Train Name</font>
                   </th>
@@ -144,7 +144,7 @@ export default function ReservationHistory() {
                     <font color="#fff">Edit</font>
                   </th>
                   <th>
-                    <font color="#fff">Delete</font>
+                    <font color="#fff">Cancel</font>
                   </th>
                 </tr>
               </thead>
@@ -152,7 +152,7 @@ export default function ReservationHistory() {
                 {filteredReservations.map((reservation, index) => (
                   <tr key={reservation.trainName}>
                     <th scope="row">{index + 1}</th>
-                    <td>{reservation.train}</td>
+                    {/* <td>{reservation.train}</td> */}
                     <td>{reservation.trainName}</td>
                     <td>{reservation.reservationDate}</td>
                     <td>{reservation.bookingDate}</td>
@@ -185,7 +185,7 @@ export default function ReservationHistory() {
                         }}
                         onClick={() => handleDelete(reservation.id)}
                       >
-                        Delete
+                        Cancel
                       </Button>
                     </td>
                   </tr>

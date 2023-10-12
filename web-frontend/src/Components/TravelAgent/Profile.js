@@ -84,6 +84,7 @@ export default function Profile() {
                 type="text"
                 id="formFullName"
                 className="form-control"
+                value="Aroshini Amasha"
                 readOnly
               />
             </div>
@@ -94,6 +95,7 @@ export default function Profile() {
               <input
                 type="text"
                 id="formEmail"
+                value="aroshini@gmail.com"
                 className="form-control"
                 readOnly
               />
@@ -105,6 +107,7 @@ export default function Profile() {
               <input
                 type="text"
                 id="formRole"
+                value="Travel Agent"
                 className="form-control"
                 readOnly
               />
@@ -116,6 +119,7 @@ export default function Profile() {
               <input
                 type="text"
                 id="formNIC"
+                value="987654321V"
                 className="form-control"
                 readOnly
               />
@@ -127,6 +131,7 @@ export default function Profile() {
               <input
                 type="text"
                 id="formPhoneNumber"
+                value="0712345678"
                 className="form-control"
                 readOnly
               />
