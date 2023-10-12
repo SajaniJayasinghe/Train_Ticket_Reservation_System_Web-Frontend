@@ -117,9 +117,6 @@ export default function ReservationHistory() {
                     <font color="#fff">No</font>
                   </th>
                   <th>
-                    <font color="#fff">Train Number</font>
-                  </th>
-                  <th>
                     <font color="#fff">Train Name</font>
                   </th>
                   <th>
@@ -152,7 +149,6 @@ export default function ReservationHistory() {
                 {filteredReservations.map((reservation, index) => (
                   <tr key={reservation.trainName}>
                     <th scope="row">{index + 1}</th>
-                    <td>{reservation.train}</td>
                     <td>{reservation.trainName}</td>
                     <td>{reservation.reservationDate}</td>
                     <td>{reservation.bookingDate}</td>

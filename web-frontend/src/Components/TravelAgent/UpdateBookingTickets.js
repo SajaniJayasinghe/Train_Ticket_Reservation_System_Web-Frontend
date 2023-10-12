@@ -26,14 +26,18 @@ export default function UpdateBookingTickets() {
     axios
       .get(`https://localhost:7280/api/Reservations/${reservationID}`)
       .then((res) => {
-        if (res.statusCode === 200) {
-          setNic(res.data.nic);
-          setNumberOfSeats(res.data.numberOfSeats);
-          setFromStation(res.data.fromStation);
-          setToStation(res.data.toStation);
-          setReservationDate(res.data.reservationDate);
-          setTrain(res.data.train);
-          setTrainName(res.data.trainName);
+        if (res.status === 200) {
+          // Use 'status' instead of 'statusCode'
+          const reservationData = res.data;
+
+          // Set state variables with the data
+          setNic(reservationData.nic);
+          setNumberOfSeats(reservationData.numberOfSeats);
+          setFromStation(reservationData.fromStation);
+          setToStation(reservationData.toStation);
+          setReservationDate(reservationData.reservationDate);
+          setTrain(reservationData.train);
+          setTrainName(reservationData.trainName);
         }
         console.log("Reservations retrieved successfully", res.data);
         setReservationCount(res.data);
@@ -42,6 +46,7 @@ export default function UpdateBookingTickets() {
         console.error("Error retrieving reservations", error);
       });
   }, [reservationID]);
+  console.log(nic);
 
   // const handleUpdateReservation = (e) => {
   //   e.preventDefault();
@@ -113,7 +118,7 @@ export default function UpdateBookingTickets() {
                       className="form-control"
                       placeholder="NIC Number"
                       value={nic}
-                      // onChange={(e) => setNic(e.target.value)}
+                      onChange={(e) => setNic(e.target.value)}
                       required
                     />
                   </div>
@@ -126,7 +131,7 @@ export default function UpdateBookingTickets() {
                       className="form-control"
                       placeholder="Number of Seats"
                       value={numberOfSeats}
-                      // onChange={(e) => setNumberOfSeats(e.target.value)}
+                      onChange={(e) => setNumberOfSeats(e.target.value)}
                       required
                     />
                   </div>
