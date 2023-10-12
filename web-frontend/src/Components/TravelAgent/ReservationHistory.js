@@ -34,25 +34,40 @@ export default function ReservationHistory() {
     setFilteredReservations(filteredReservations); // Update filtered reservations
   };
 
-  const handleDelete = async (reservationId) => {
-    if (window.confirm("Are you sure you want to delete this train?")) {
+  const handleDelete = async (reservationId, reservationDate) => {
+    const daysUntilReservation =
+      (new Date(reservationDate) - new Date()) / (1000 * 60 * 60 * 24);
+
+    if (daysUntilReservation < 5) {
+      // Check if it's at least 5 days before the reservation date
+      setError(
+        "Reservations can only be canceled at least 5 days before the reservation date."
+      );
+      // Display an alert message
+      alert(
+        "Reservations can only be canceled at least 5 days before the reservation date."
+      );
+      return;
+    }
+
+    if (window.confirm("Are you sure you want to cancel this reservation?")) {
       try {
         const response = await axios.delete(
           `https://localhost:7280/api/Reservations/${reservationId}`
         );
         if (response.status === 200) {
-          // Refresh the train schedule data after deletion
+          // Refresh the reservation data after cancellation
           retrieveReservations();
         } else {
           // Handle error (e.g., display an error message)
-          setError("Failed to delete the reservation. Please try again.");
+          setError("Failed to cancel the reservation. Please try again.");
         }
       } catch (error) {
         // Handle network error or any other unexpected errors
-        console.error("Error deleting reservation:", error);
+        console.error("Error canceling reservation:", error);
         // Display an error message
         setError(
-          "An error occurred while deleting the reservation. Please try again later."
+          "An error occurred while canceling the reservation. Please try again later."
         );
       }
     }
@@ -73,7 +88,7 @@ export default function ReservationHistory() {
                 marginTop: 40,
               }}
             >
-              <b>RESRVATION HISTORY</b>
+              <b>RESERVATION HISTORY</b>
             </h3>
             <br />
 
@@ -116,9 +131,6 @@ export default function ReservationHistory() {
                   <th>
                     <font color="#fff">No</font>
                   </th>
-                  {/* <th>
-                    <font color="#fff">Train Number</font>
-                  </th> */}
                   <th>
                     <font color="#fff">Train Name</font>
                   </th>
@@ -152,10 +164,15 @@ export default function ReservationHistory() {
                 {filteredReservations.map((reservation, index) => (
                   <tr key={reservation.trainName}>
                     <th scope="row">{index + 1}</th>
-                    {/* <td>{reservation.train}</td> */}
                     <td>{reservation.trainName}</td>
-                    <td>{reservation.reservationDate}</td>
-                    <td>{reservation.bookingDate}</td>
+                    <td>
+                      {new Date(
+                        reservation.reservationDate
+                      ).toLocaleDateString()}
+                    </td>
+                    <td>
+                      {new Date(reservation.bookingDate).toLocaleDateString()}
+                    </td>
                     <td>{reservation.nic}</td>
                     <td>{reservation.fromStation}</td>
                     <td>{reservation.toStation}</td>
@@ -183,7 +200,12 @@ export default function ReservationHistory() {
                           marginRight: "10px",
                           borderRadius: 5,
                         }}
-                        onClick={() => handleDelete(reservation.id)}
+                        onClick={() =>
+                          handleDelete(
+                            reservation.id,
+                            reservation.reservationDate
+                          )
+                        }
                       >
                         Cancel
                       </Button>
