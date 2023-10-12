@@ -110,7 +110,18 @@ export default function BookingTickets() {
     }
   };
 
-  const stationOptions = ["Badulla", "Kandy", "Colombo"];
+  const stationOptions = [
+    "Badulla",
+    "Kandy",
+    "Colombo",
+    "Galle",
+    "Gill",
+    "Haputale",
+    "Haliela",
+    "Gampaha",
+    "Matara",
+    "Beliatta",
+  ];
 
   const resetForm = () => {
     setNic("");
