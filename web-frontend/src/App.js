@@ -18,6 +18,7 @@ import Profile from "./Components/TravelAgent/Profile";
 import BackOfficerProfile from "./Components/Back-Officer/BackOfficerProfile";
 import ReservationHistory from "./Components/TravelAgent/ReservationHistory";
 import UpdateBookingTickets from "./Components/TravelAgent/UpdateBookingTickets";
+import GetTravelersDetails from "./Components/TravelAgent/GetTravelersDetails";
 
 function App() {
   return (
@@ -49,10 +50,12 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/backofficerprofile" element={<BackOfficerProfile />} />
         <Route path="/reservationHistory" element={<ReservationHistory />} />
+
         <Route
           path="/Reservations/:reservationID"
           element={<UpdateBookingTickets />}
         />
+        <Route path="/travelerDetails" element={<GetTravelersDetails />} />
       </Routes>
     </BrowserRouter>
   );
