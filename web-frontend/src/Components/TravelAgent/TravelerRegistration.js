@@ -61,7 +61,7 @@ export default function TravelerRegistration() {
       .post("https://localhost:7280/api/Traveler", traveler)
       .then(() => {
         alert("Traveler Account Creation Success");
-        window.location.href = "/travelAgentHome";
+        window.location.href = "/travelerDetails";
       })
       .catch((err) => {
         setError("Registration failed. Please try again.");

@@ -76,6 +76,21 @@ export default function HomePage() {
               <Button
                 variant="contained"
                 style={{
+                  background: "#800000",
+                  flex: "1",
+                  color: "#ffff",
+                  marginRight: "6px",
+                  borderRadius: 5,
+                }}
+                href="/travelerDetails"
+                disableElevation
+                type="submit"
+              >
+                <b>Taveler Details</b>
+              </Button>
+              <Button
+                variant="contained"
+                style={{
                   background: "#006A4E",
                   flex: "1",
                   color: "#ffff",
