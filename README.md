@@ -2,7 +2,7 @@
 
 * Introduction
   
-In response to the growing demand for a streamlined and efficient Train Ticket Reservation System in Sri Lanka, we have developed a comprehensive solution that caters to both back- office operations and traveler needs. Our system is built on a robust client-server architecture, featuring a web application for back-office functions and a mobile application for travelers. This end-to-end Ticket Reservation system offers a range of functionalities designed to enhance the user experience and ensure seamless management of train bookings.
+  In response to the growing demand for a streamlined and efficient Train Ticket Reservation System in Sri Lanka, we have developed a comprehensive solution that caters to both back- office operations and traveler needs. Our system is built on a robust client-server architecture, featuring a web application for back-office functions and a mobile application for travelers. This end-to-end Ticket Reservation system offers a range of functionalities designed to enhance the user experience and ensure seamless management of train bookings.
 
 * Web Application
 • User Management
