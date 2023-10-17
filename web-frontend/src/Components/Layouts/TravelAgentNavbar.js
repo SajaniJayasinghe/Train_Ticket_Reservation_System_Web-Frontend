@@ -62,7 +62,7 @@ function TravelAgentNavbar() {
 
               <li className="nav-item">
                 <Link
-                  to="/locations"
+                  to="https://www.google.com/maps/search/railway+stations/@6.8785457,79.8465832,12z/data=!3m1!4b1?entry=ttu"
                   className="nav-link"
                   aria-current="page"
                   style={{
@@ -79,7 +79,7 @@ function TravelAgentNavbar() {
 
               <li className="nav-item">
                 <Link
-                  to="/aboutus"
+                  to="#"
                   className="nav-link"
                   aria-current="page"
                   style={{

@@ -4,9 +4,9 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 
 export default function GetTravelersDetails() {
-  const [travelerDetails, settravelerDetails] = useState([]);
+  const [travelerDetails, setTravelerDetails] = useState([]);
   const [searchKey, setSearchKey] = useState("");
-  const [filteredTravelerDetails, setfilteredTravelerDetails] = useState([]); // State to store filtered reservations
+  const [filteredTravelerDetails, setFilteredTravelerDetails] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -16,8 +16,8 @@ export default function GetTravelersDetails() {
   const retrieveTravelers = () => {
     axios.get("https://localhost:7280/api/Traveler").then((res) => {
       if (res.status === 200) {
-        settravelerDetails(res.data);
-        setfilteredTravelerDetails(res.data); // Initialize filtered reservations with all reservations
+        setTravelerDetails(res.data);
+        setFilteredTravelerDetails(res.data);
       }
     });
   };
@@ -26,12 +26,29 @@ export default function GetTravelersDetails() {
     const newSearchKey = e.target.value;
     setSearchKey(newSearchKey);
 
-    // Filter reservations based on the search key (NIC)
-    const filteredTravelerDetails = travelerDetails.filter((travelerDetails) =>
-      travelerDetails.nic.includes(newSearchKey)
+    const filteredTravelerDetails = travelerDetails.filter((traveler) =>
+      traveler.nic.includes(newSearchKey)
     );
 
-    setfilteredTravelerDetails(filteredTravelerDetails); // Update filtered reservations
+    setFilteredTravelerDetails(filteredTravelerDetails);
+  };
+
+  const handleDelete = (nic) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      axios
+        .delete(`https://localhost:7280/api/Traveler/${nic}`)
+        .then((res) => {
+          if (res.status === 200) {
+            retrieveTravelers(); // Refresh the traveler list after deletion
+          } else {
+            setError("Deletion failed. Please try again.");
+          }
+        })
+        .catch((error) => {
+          console.error("Deletion failed with error:", error);
+          setError("Deletion failed. Please try again.");
+        });
+    }
   };
 
   return (
@@ -62,30 +79,6 @@ export default function GetTravelersDetails() {
               />
               <br />
             </div>
-            <div
-              className="buttons"
-              style={{
-                position: "absolute",
-                right: 0,
-                margin: "-60px",
-              }}
-            >
-              <Button
-                variant="contained"
-                style={{
-                  background: "#006A4E",
-                  flex: "1",
-                  color: "#ffff",
-                  marginRight: "150px",
-                  borderRadius: 5,
-                }}
-                href="/travelerRegistration"
-                disableElevation
-                type="submit"
-              >
-                <b>Traveler Registration</b>
-              </Button>
-            </div>
             <table className="table">
               <thead>
                 <tr bgcolor="#2B3856">
@@ -110,24 +103,59 @@ export default function GetTravelersDetails() {
                   <th>
                     <font color="#fff">Status</font>
                   </th>
+                  <th>
+                    <font color="#fff">Edit</font>
+                  </th>
+                  <th>
+                    <font color="#fff">Delete</font>
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {filteredTravelerDetails.map((travelerDetails, index) => (
-                  <tr key={travelerDetails.nic}>
+                {filteredTravelerDetails.map((traveler, index) => (
+                  <tr key={traveler.nic}>
                     <th scope="row">{index + 1}</th>
-                    <td>{travelerDetails.nic}</td>
-                    <td>{travelerDetails.firstName}</td>
-                    <td>{travelerDetails.lastName}</td>
-                    <td>{travelerDetails.email}</td>
-                    <td>{travelerDetails.phone}</td>
+                    <td>{traveler.nic}</td>
+                    <td>{traveler.firstName}</td>
+                    <td>{traveler.lastName}</td>
+                    <td>{traveler.email}</td>
+                    <td>{traveler.phone}</td>
                     <td
                       style={{
                         fontWeight: "bold",
-                        color: travelerDetails.isActive ? "#004225" : "red",
+                        color: traveler.isActive ? "#004225" : "red",
                       }}
                     >
-                      {travelerDetails.isActive ? "Active" : "Deactivated"}
+                      {traveler.isActive ? "Active" : "Deactivated"}
+                    </td>
+                    <td>
+                      <Button
+                        style={{
+                          background: traveler.isActive ? "#004225" : "#CECECE",
+                          flex: "1",
+                          color: "#ffff",
+                          marginRight: "10px",
+                          borderRadius: 5,
+                        }}
+                        href={`/Traveler/${traveler.nic}`}
+                        disabled={!traveler.isActive} // Disable if isActive is false
+                      >
+                        Edit
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        style={{
+                          background: "#B21807",
+                          flex: "1",
+                          color: "#ffff",
+                          marginRight: "10px",
+                          borderRadius: 5,
+                        }}
+                        onClick={() => handleDelete(traveler.nic)}
+                      >
+                        Delete
+                      </Button>
                     </td>
                   </tr>
                 ))}
