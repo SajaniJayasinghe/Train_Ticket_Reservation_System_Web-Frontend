@@ -51,7 +51,7 @@ export default class NavBar extends Component {
                   <a
                     className="nav-link"
                     aria-current="page"
-                    href="/"
+                    to="https://www.google.com/maps/search/railway+stations/@6.8785457,79.8465832,12z/data=!3m1!4b1?entry=ttu"
                     style={{
                       color: "black",
                       fontFamily: "times new roman",

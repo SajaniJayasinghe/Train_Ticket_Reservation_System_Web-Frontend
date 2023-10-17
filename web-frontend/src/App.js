@@ -19,6 +19,7 @@ import BackOfficerProfile from "./Components/Back-Officer/BackOfficerProfile";
 import ReservationHistory from "./Components/TravelAgent/ReservationHistory";
 import UpdateBookingTickets from "./Components/TravelAgent/UpdateBookingTickets";
 import GetTravelersDetails from "./Components/TravelAgent/GetTravelersDetails";
+import UpdateTravelers from "./Components/TravelAgent/UpdateTravelers";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
           element={<UpdateBookingTickets />}
         />
         <Route path="/travelerDetails" element={<GetTravelersDetails />} />
+        <Route path="/Traveler/:travelerID" element={<UpdateTravelers />} />
       </Routes>
     </BrowserRouter>
   );
