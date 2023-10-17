@@ -5,14 +5,19 @@
   In response to the growing demand for a streamlined and efficient Train Ticket Reservation System in Sri Lanka, we have developed a comprehensive solution that caters to both back- office operations and traveler needs. Our system is built on a robust client-server architecture, featuring a web application for back-office functions and a mobile application for travelers. This end-to-end Ticket Reservation system offers a range of functionalities designed to enhance the user experience and ensure seamless management of train bookings.
 
 * Web Application
+  
 • User Management
 In our web application, we have established a two-tiered user management system. Users can be categorized into two distinct roles: Backoffice and Travel Agent. This segregation of roles ensures that only Backoffice users have access to certain critical functions within the system, maintaining data security and integrity.
+
 • Traveler Management
 Traveler profiles can be easily created, updated, or deleted within the system, with the National Identification Card (NIC) serving as the primary key. Traveler accounts can be activated and deactivated, granting them control over their participation in the reservation process.
+
 • Ticket Booking Management
 Our system simplifies the management of ticket bookings, offering features such as creating new reservations (with a limitation of a reservation date within 30 days from the booking date and a maximum of 4 reservations per reference ID). Additionally, reservations can be updated or canceled, provided that changes or cancellations are requested at least 5 days before the reservation date.
+
 • Train Management
 Efficient train management is at the heart of our system. This functionality includes the creation of new trains, each complete with schedules. Notably, reservations can only be made once atrain is both active and published. Furthermore, train schedules can be updated, but trains with existing reservations cannot be canceled to prevent disruptions in travelers' plans.
+
 • User Interface
 Our user interfaces are designed with elegance in mind, utilizing Bootstrap to provide a visually appealing and user-friendly experience.
 
